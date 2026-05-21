@@ -6,22 +6,26 @@
     
   <div class="mb-3">
       <label for="title" class="form-label">Title</label>
-      <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control" />
+      <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control" required/>
+      <div class="valid-feedback">enter a Good Title</div>
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <textarea name="listing[description]" class="form-control"> <%= listing.description %></textarea>
+      <textarea name="listing[description]" class="form-control" required> <%= listing.description %></textarea>
+      <div class="valid-feedback">enter a short description</div>
     </div>
     
     <div class="mb-3">
       <label for="image" class="form-label">Image link</label>
-      <input name="listing[image]" value="<%= listing.image.url %>" type="text" class="form-control"/>
+      <input name="listing[image]" value="<%= listing.image.url %>" type="text" class="form-control" required/>
+      <div class="valid-feedback">enter a valid img link</div>
     </div>
 
     <div class="row">
       <div class="mb-3 col-md-4">
         <label for="price"  class="form-label">price</label>
-        <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control"/>
+        <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control" required/>
+        <div class="valid-feedback">enter a valid price</div>
       </div>
       <div class="mb-3 col-md-8">
         <label for="country" class="form-label">Enter Country</label>
@@ -30,7 +34,9 @@
         value="<%= listing.country %>"
         type="text"
         class="form-control"
+        required
       />
+      <div class="valid-feedback">enter a valid Country</div>
     </div>
 
     </div>
@@ -40,10 +46,12 @@
       name="listing[location]"
       value="<%= listing.location %>"
       type="text"
-      class="form-control"
+      class="form-control" required
     />
+    <div class="valid-feedback">enter a valid location</div>
     </div>
     <button class="btn btn-dark edit-btn mt-3 ">Edit</button>
   </form>
   </div>
 </div>
+<script src="/js/script.js"></script>
