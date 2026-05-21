@@ -20,6 +20,8 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
+
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
@@ -31,11 +33,11 @@ app.get("/", (req, res) => {
 });
 
 
-// app.get("/listing", (req, res)=>{
-//   Listing.find({}).then((res)=>{
-//     console.log(res);
-//   });
-// });
+app.get("/listing", (req, res)=>{
+  Listing.find({}).then((res)=>{
+    console.log(res);
+  });
+});
  
 
 // //Index Route
@@ -63,6 +65,13 @@ app.get("/listings/:id", async (req, res) => {
 // //Create Route
 app.post("/listings", async (req, res) => {
   const newListing = new Listing(req.body.listing);
+
+  // ✅ FIX IMAGE HERE
+  newListing.image = {
+    url: req.body.listing.image,
+    filename: "listingimage"
+  };
+
   await newListing.save();
   res.redirect("/listings");
 });
@@ -77,7 +86,19 @@ app.get("/listings/:id/edit", async (req, res) => {
 // //Update Route
 app.put("/listings/:id", async (req, res) => {
   let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+  let listing = await Listing.findById(id);
+
+  listing.set(req.body.listing);
+
+  // ✅ FIX IMAGE HERE
+  listing.image = {
+    url: req.body.listing.image,
+    filename: "listingimage"
+  };
+
+  await listing.save();
+
   res.redirect(`/listings/${id}`);
 });
 
