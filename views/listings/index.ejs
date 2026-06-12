@@ -7,14 +7,14 @@
 <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1">
   <% for(let listing of allListings) { %>
   <a href="/listings/<%= listing._id%>" class="listing-link">
-  <div class="card col">
+  <div class="card col listing-card">
     <img 
   src="<%= typeof listing.image === 'string' ? listing.image : listing.image.url %>" 
   class="card-img-top" 
   alt="listing_image" 
   style="height: 15rem"
 />
-    <div class="card-img-overlay">NIKSONA</div>
+    <div class="card-img-overlay">NSB</div>
     <div class="card-body">
       <p class="card-text">
         <b>

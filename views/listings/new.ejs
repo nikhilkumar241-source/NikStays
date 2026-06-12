@@ -12,25 +12,27 @@
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
       <textarea name="listing[description]"placeholder="enter description" class="form-control" required></textarea>
-      <div class="valid-feedback">Please enter a short description</div>
+      <div class="invalid-feedback">Please enter a short description</div>
     </div>
 
     <div class="mb-3">
       <label for="image" class="form-label">Image link</label>
-      <input name="listing[image]" placeholder="enter image URL/Link" type="text" class="form-control"/>
+      <input name="listing[image]" placeholder="enter image URL/Link" type="text" class="form-control" required/>
+      <div class="invalid-feedback">enter a valid url</div>
     </div>
     <div class="row">
       <div class="mb-3 col-md-4">
       <label for="price"  class="form-label">price</label>
       <input name="listing[price]" placeholder="1200" class="form-control" required/>
+      <div class="invalid-feedback">enter a valid price</div>
     </div>
-    <div class="valid-feedback">enter a valid price</div>
+    
       
 
     <div class="mb-3 col-md-8">
       <label for="country" class="form-label">Enter Country</label>
       <input name="listing[country]" placeholder="India" type="text" class="form-control" required/>
-      <div class="valid-feedback">Country name should be valid!</div>
+      <div class="invalid-feedback">Country name should be valid!</div>
 
     </div>
     </div>
@@ -39,7 +41,7 @@
     <div class="mb-3">
       <label for="location" class="form-label">Enter location</label>
       <input name="listing[location]" placeholder="Agra, Delhi" type="text" class="form-control" required/>
-      <div class="valid-feedback">location should be valid</div>
+      <div class="invalid-feedback">location should be valid</div>
     </div>
       <button class="btn btn-dark add-btn mt-3">Add</button>
     </form>
