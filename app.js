@@ -5,6 +5,8 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressErrors.js");
+const session =require("express-session");
+const flash = require("connect-flash");
 
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
@@ -31,21 +33,33 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-// Root Route
+const sessionOptions = {
+  secret: "mysupressecretcode",
+  resave: false,
+  saveUninitialized: true,
+  cookie:{
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true
+  },
+};
+
 app.get("/", (req, res) => {
   res.send("Hi, I am root");
 });
 
-const validateListing = (req, res, next) => {
-  let { error } = listingSchema.validate(req.body);
-  if (error) {
-    let errMSg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(400, errMSg);
-  } else {
-    next();
-  }
-};
 
+app.use(session(sessionOptions));
+app.use(flash());
+
+// Root Route
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  console.log(res.locals.success);
+  next();
+
+})
 
 
 app.use("/listings", listings);
