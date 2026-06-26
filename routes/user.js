@@ -43,7 +43,13 @@ router.post(
     failureFlash: true }) 
     ,async(req, res)=>{
         req.flash("success","Welcome back to Wanderlust!");
+
         let redirectUrl = res.locals.redirectUrl || "/listings";
+        
+        if (redirectUrl.includes("${id}") || redirectUrl.includes("undefined")) {
+            redirectUrl = "/listings";
+        }
+
         res.redirect(redirectUrl);
     }
 );

@@ -31,6 +31,10 @@ const listingSchema = new Schema({
       ref: "Review", // Ensure this matches exactly with mongoose.model("Review", ...) in review.js
     },
   ],
+  owner:{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 // FIX 2 (Crucial for later): Handling Deletion (Mongoose Middleware)
