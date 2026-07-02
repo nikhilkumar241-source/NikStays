@@ -11,16 +11,8 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-    filename: {
-      type: String,
-      default: "listingimage",
-    },
-    url: {
-      type: String,
-      // FIX 1: Provide a fallback if 'v' itself is undefined or null, preventing crashes
-      default: "https://images.unsplash.com/photo-1625505826533-5c80aca7d157",
-      set: (v) => v === "" ? "https://images.unsplash.com/photo-1625505826533-5c80aca7d157" : v,
-    },
+    url: String,
+    filename: String,
   },
   price: Number,
   location: String,
