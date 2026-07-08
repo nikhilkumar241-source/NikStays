@@ -28,16 +28,16 @@ const listingSchema = new Schema({
     ref: "User",
   },
   geometry: {
-    type: {
+  type: {
     type: String,
-    enum: ['Point'],
-    required: true
-    },
-    coordinates: {
-      type: [Number],
-      required: true
-    },
+    enum: ["Point"],
+    default: "Point",
   },
+  coordinates: {
+    type: [Number],
+    default: [0, 0],
+  },
+},
 });
 
 // FIX 2 (Crucial for later): Handling Deletion (Mongoose Middleware)
