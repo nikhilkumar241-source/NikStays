@@ -121,29 +121,32 @@
 
 
 
-<div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 mt-3">
+      <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 mt-3" id="listingContainer">
   <% for(let listing of allListings) { %>
-  <a href="/listings/<%= listing._id%>" class="listing-link">
-  <div class="card col listing-card">
-    <img 
-  src="<%= listing.image.url %>" 
-  class="card-img-top" 
-  alt="listing_image" 
-  style="height: 15rem"
-/>
-    <div class="card-img-overlay">NSB</div>
-    <div class="card-body">
-  <p class="card-text">
-    <b><%= listing.title %></b><br/>
-    &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-    <br>
-    <%# CHANGE THIS LINE IF IT SAYS "uploader" %>
-    <i>Owned by <%= listing.owner ? listing.owner.username : "Anonymous" %></i>
-  </p>
-</div>
-  </div>
-</a>
-<%}%>
+
+    <a href="/listings/<%= listing._id %>" class="listing-link">
+      <div class="card col listing-card">
+        <img
+          src="<%= listing.image.url %>"
+          class="card-img-top"
+          alt="listing_image"
+          style="height: 15rem"
+        />
+
+        <div class="card-img-overlay">NSB</div>
+
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.title %></b><br/>
+            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+            <br>
+            <i>Owned by <%= listing.owner ? listing.owner.username : "Anonymous" %></i>
+          </p>
+        </div>
+      </div>
+    </a>
+
+  <% } %>
 </div>
 
 <script>

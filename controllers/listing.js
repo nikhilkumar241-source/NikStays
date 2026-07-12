@@ -4,10 +4,42 @@ const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({accessToken: mapToken});
 
 
-module.exports.index = async (req, res) =>{
-    // Change this line:
-    const allListings = await Listing.find({}).populate("owner"); 
-    res.render("listings/index.ejs", {allListings});
+module.exports.index = async (req, res) => {
+    const { search } = req.query;
+
+    let allListings;
+
+    if (search) {
+        allListings = await Listing.find({
+            $or: [
+                { title: { $regex: search, $options: "i" } },
+                { location: { $regex: search, $options: "i" } },
+                { country: { $regex: search, $options: "i" } }
+            ]
+        }).populate("owner");
+    } else {
+        allListings = await Listing.find({}).populate("owner");
+    }
+
+    res.render("listings/index.ejs", { allListings, search });
+};
+
+module.exports.searchListings = async (req, res) => {
+    const { search } = req.query;
+
+    let listings = [];
+
+    if (search && search.trim() !== "") {
+        listings = await Listing.find({
+            $or: [
+                { title: { $regex: search, $options: "i" } },
+                { location: { $regex: search, $options: "i" } },
+                { country: { $regex: search, $options: "i" } }
+            ]
+        });
+    }
+
+    res.json(listings);
 };
 
 module.exports.renderNewForm = (req, res) =>{
