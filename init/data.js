@@ -1,6 +1,6 @@
 const sampleListings = [
   {
-    title: "Nikhils House!",
+    title: "Nikhils Villa!",
     description:
       "Unplug and unwind in this peaceful mountain cabin. Surrounded by nature, it's a perfect place to recharge.",
     image: {
