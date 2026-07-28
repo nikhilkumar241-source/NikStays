@@ -14,6 +14,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
+// Routers
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
@@ -56,7 +57,7 @@ const store = MongoStore.create({
 });
 
 store.on("error", (err) => {
-  console.log("Session Store Error", err);
+  console.log("Session Store Error:", err);
 });
 
 const sessionOptions = {
@@ -82,7 +83,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// ================= LOCALS =================
+// ================= GLOBAL VARIABLES =================
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -100,19 +101,22 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
-// ================= 404 =================
+// ================= 404 HANDLER =================
+// Express 5 compatible
 app.use((req, res, next) => {
-    next(new ExpressError(404, "Page Not Found"));
+  next(new ExpressError(404, "Page Not Found"));
 });
 
 // ================= ERROR HANDLER =================
 app.use((err, req, res, next) => {
-  console.error("ERROR:");
   console.error(err);
-  console.error(err.stack);
 
-  let { statusCode = 500, message = "Something Went Wrong" } = err;
-  res.status(statusCode).render("error.ejs", { message, err });
+  const { statusCode = 500, message = "Something Went Wrong" } = err;
+
+  res.status(statusCode).render("error.ejs", {
+    err,
+    message,
+  });
 });
 
 // ================= START SERVER =================

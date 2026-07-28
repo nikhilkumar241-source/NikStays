@@ -72,11 +72,11 @@ module.exports.createListing = async (req, res, next) => {
   console.log("Body:", req.body);
   console.log("File:", req.file);
   let response = await geocodingClient
-    .forwardGeocode({
-      query: req.body.listing.location, // Use the location from your form
-      limit: 1,
-    })
-    .send();
+  .forwardGeocode({
+    query: `${req.body.listing.location}, ${req.body.listing.country}`,
+    limit: 1,
+  })
+  .send();
 
   // 1. Assign the geometry to your listing object
   const newListing = new Listing(req.body.listing);
