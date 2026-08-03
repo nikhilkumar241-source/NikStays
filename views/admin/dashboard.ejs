@@ -1,0 +1,268 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<div class="container py-5">
+
+
+<h2 class="fw-bold mb-4">
+    Admin Dashboard 🏠
+</h2>
+
+
+
+<div class="row g-4 mb-5">
+
+
+<div class="col-md-4">
+
+<div class="card shadow border-0 rounded-4 p-4 text-center">
+
+
+<i class="fa-solid fa-house fa-2x mb-3"></i>
+
+
+<h3>
+<%= listings.length %>
+</h3>
+
+
+<p class="text-muted">
+Total Listings
+</p>
+
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-4">
+
+<div class="card shadow border-0 rounded-4 p-4 text-center">
+
+
+<i class="fa-solid fa-calendar-check fa-2x mb-3"></i>
+
+
+<h3>
+<%= bookings.length %>
+</h3>
+
+
+<p class="text-muted">
+Total Bookings
+</p>
+
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-4">
+
+<div class="card shadow border-0 rounded-4 p-4 text-center">
+
+
+<i class="fa-solid fa-users fa-2x mb-3"></i>
+
+
+<h3>
+<%= users.length %>
+</h3>
+
+
+<p class="text-muted">
+Total Users
+</p>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- BOOKINGS -->
+
+
+<h3 class="fw-bold mb-3">
+Recent Bookings
+</h3>
+
+
+<div class="table-responsive">
+
+
+<table class="table table-hover">
+
+
+<thead>
+
+<tr>
+
+<th>User</th>
+
+<th>Property</th>
+
+<th>Date</th>
+
+<th>Status</th>
+
+<th>Amount</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+<% bookings.forEach(booking=>{ %>
+
+
+<tr>
+
+
+<td>
+<%= booking.user.username %>
+</td>
+
+
+
+<td>
+<%= booking.listing.title %>
+</td>
+
+
+
+<td>
+<%= booking.checkIn.toDateString() %>
+</td>
+
+
+
+<td>
+
+
+<span class="badge bg-success">
+
+<%= booking.status %>
+
+</span>
+
+
+</td>
+
+
+
+<td>
+
+₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
+
+</td>
+
+
+</tr>
+
+
+<% }) %>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+
+
+
+<hr class="my-5">
+
+
+
+<!-- LISTINGS -->
+
+
+<h3 class="fw-bold mb-3">
+All Listings
+</h3>
+
+
+
+<div class="row">
+
+
+<% listings.forEach(listing=>{ %>
+
+
+<div class="col-lg-4 mb-4">
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+<img
+src="<%= listing.images[0].url %>"
+class="card-img-top rounded-top-4"
+height="220">
+
+
+
+<div class="card-body">
+
+
+<h5 class="fw-bold">
+
+<%= listing.title %>
+
+</h5>
+
+
+
+<p class="text-muted">
+
+<%= listing.location %>
+
+</p>
+
+
+
+<a
+href="/listings/<%= listing._id %>"
+class="btn btn-dark rounded-pill">
+
+View
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<% }) %>
+
+
+</div>
+
+
+</div>

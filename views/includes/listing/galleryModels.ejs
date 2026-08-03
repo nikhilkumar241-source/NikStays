@@ -1,0 +1,247 @@
+                <!-- ================= IMAGE GALLERY MODAL ================= -->
+
+
+                <%
+                let galleryImages = [];
+
+                if (listing.images && listing.images.length > 0) {
+
+                    galleryImages = listing.images;
+
+                } else if (listing.image) {
+
+                    galleryImages = [listing.image];
+
+                }
+
+                %>
+
+
+
+
+
+                <div 
+                class="modal fade" 
+                id="imageModal" 
+                tabindex="-1"
+                >
+
+
+
+
+
+                <div class="modal-dialog modal-fullscreen">
+
+
+
+
+
+                <div class="modal-content bg-black border-0">
+
+
+
+
+
+
+
+                <div class="modal-header border-0">
+
+
+
+                <h5 
+                id="galleryCounter" 
+                class="text-white"
+                >
+
+                1 / <%= galleryImages.length %>
+
+                </h5>
+
+
+
+
+
+                <button
+
+                type="button"
+
+                class="btn-close btn-close-white"
+
+                data-bs-dismiss="modal"
+
+                ></button>
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <div class="modal-body d-flex justify-content-center align-items-center">
+
+
+
+
+
+                <div class="text-center w-100">
+
+
+
+
+
+
+
+                <div class="position-relative">
+
+
+
+
+
+
+                <button
+
+                id="prevImage"
+
+                class="gallery-arrow left"
+
+                >
+
+
+                ❮
+
+
+                </button>
+
+
+
+
+
+
+
+
+                <img
+
+                id="galleryModalImage"
+
+                class="img-fluid rounded"
+
+                style="max-height:75vh;"
+
+                >
+
+
+
+
+
+
+
+                <button
+
+                id="nextImage"
+
+                class="gallery-arrow right"
+
+                >
+
+
+                ❯
+
+
+                </button>
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                <!-- Thumbnails -->
+
+
+                <div
+
+                id="thumbnailContainer"
+
+                class="d-flex justify-content-center flex-wrap mt-4"
+
+                >
+
+
+
+
+                <% galleryImages.forEach(function(img,index){ %>
+
+
+
+
+                <img
+
+                src="<%= img.url %>"
+
+                class="gallery-thumb"
+
+                data-index="<%= index %>"
+
+                >
+
+
+
+
+                <% }) %>
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+                </div>
+
+
+
+                </div>
+
+
+
+
+                </div>

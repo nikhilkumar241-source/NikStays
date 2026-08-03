@@ -1,166 +1,219 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-  #filters{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+#filters{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    margin-top:1rem;
+}
 
-  .filter
-  {
-    text-align: center;
-    margin-right: 2rem;
-    margin-top: 2rem;
-    opacity: 0.7;
-  }
-  .filter:hover{
-    opacity: 1;
-    cursor: pointer;
-  }
+.filter{
+    text-align:center;
+    margin-right:2rem;
+    margin-top:1rem;
+    opacity:.7;
+}
 
-  .tax-info{
-    display: none;
-  }
+.filter:hover{
+    opacity:1;
+    cursor:pointer;
+}
 
-  .tax-toggle
-    {
-      border: 1px solid black;
-      border-radius: 1rem;
-      height: 3.25rem;
-      padding: 1rem;
-      margin-left: 2rem;
-      display: flex;
-      align-items: center;
+.tax-info{
+    display:none;
+}
 
-      /* text-align: center;
-      margin-right: 2rem;
-      margin-top: 2rem;
-      opacity: 0.7;
-      
-      flex-wrap: wrap;  */
-  }
-  
-  .tax-toggle:hover{
-    opacity: 1;
-    cursor: pointer;
-  }
-
-  
-
+.tax-toggle{
+    border:1px solid #000;
+    border-radius:1rem;
+    height:3.25rem;
+    padding:1rem;
+    margin-left:2rem;
+    display:flex;
+    align-items:center;
+}
 </style>
 
+<!-- FILTERS -->
+
 <div id="filters">
-  <div class="filter">
-    <div> <i class="fa-solid fa-fire" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Trending</p>
-  </div>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-bed" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Rooms</p>
-  </div>
+    <a href="/listings?category=Trending" class="filter listing-link">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <p>Trending</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-mountain-city" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Iconic Cities</p>
-  </div>
+    <a href="/listings?category=Rooms" class="filter listing-link">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Rooms</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-mountain" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Mountain</p>
-  </div>
+    <a href="/listings?category=Iconic Cities" class="filter listing-link">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic Cities</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-brands fa-fort-awesome" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Castles</p>
-  </div>
+    <a href="/listings?category=Mountains" class="filter listing-link">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>Mountain</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-person-swimming" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Amazin Pools</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-campground" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Camping</p>
-  </div>
+    <a href="/listings?category=Historical" class="filter listing-link">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>Historical</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-tractor" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Farms</p>
-  </div>
+    <a href="/listings?category=Beach" class="filter listing-link">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        <p>Beach</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-burger" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Food</p>
-  </div>
+    <a href="/listings?category=Camping" class="filter listing-link">
+        <div><i class="fa-solid fa-campground"></i></div>
+        <p>Camping</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-igloo" style="color: rgb(35, 127, 255);"> </i></div>
-    <p>Domes</p>
-  </div>
+    <a href="/listings?category=Farmhouse" class="filter listing-link">
+        <div><i class="fa-solid fa-tractor"></i></div>
+        <p>Farmhouse</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-sailboat" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Boats</p>
-  </div>
+    <a href="/listings?category=Food" class="filter listing-link">
+        <div><i class="fa-solid fa-burger"></i></div>
+        <p>Food</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-anchor" style="color: rgb(35, 127, 255);"></i></div>
-    <p>Ocean</p>
-  </div>
+    <a href="/listings?category=Domes" class="filter listing-link">
+        <div><i class="fa-solid fa-igloo"></i></div>
+        <p>Domes</p>
+    </a>
 
-  <div class="tax-toggle">
-    <div class="form-check-reverse form-switch">
-  <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-  <label class="form-check-label" for="switchCheckDefault">Display Taxes</label>
+    <a href="/listings?category=Lake" class="filter listing-link">
+        <div><i class="fa-solid fa-sailboat"></i></div>
+        <p>Lake</p>
+    </a>
+
+    <a href="/listings?category=Ocean" class="filter listing-link">
+        <div><i class="fa-solid fa-anchor"></i></div>
+        <p>Ocean</p>
+    </a>
+
+    <div class="tax-toggle">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="switchCheckDefault">
+            <label class="form-check-label" for="switchCheckDefault">
+                Display Taxes
+            </label>
+        </div>
     </div>
-  </div>
 
 </div>
 
+<!-- LISTINGS -->
 
+<div class="row mt-4">
 
-      <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 mt-3" id="listingContainer">
-  <% for(let listing of allListings) { %>
+<% allListings.forEach(listing => { %>
 
-    <a href="/listings/<%= listing._id %>" class="listing-link">
-      <div class="card col listing-card">
-        <img
-          src="<%= listing.image.url %>"
-          class="card-img-top"
-          alt="listing_image"
-          style="height: 15rem"
-        />
+<%
+let coverImage;
 
-        <div class="card-img-overlay">NiksStays</div>
+if (listing.images && listing.images.length > 0) {
+    coverImage = listing.images[0].url;
+} else if (listing.image) {
+    coverImage = listing.image.url;
+} else {
+    coverImage = "https://via.placeholder.com/600x400?text=No+Image";
+}
+%>
 
-        <div class="card-body">
-          <p class="card-text">
-            <b><%= listing.title %></b><br/>
-            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-            <br>
-            <i>Owned by <%= listing.owner ? listing.owner.username : "Anonymous" %></i>
-          </p>
+<div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+
+    <div class="listing-card">
+
+        <!-- IMAGE -->
+
+        <div class="card-img-container">
+
+            <span class="guest-badge">
+                🏆 Guest favourite
+            </span>
+
+            <form action="/wishlist/<%= listing._id %>" method="POST" class="wishlist-form">
+
+                <button type="submit" class="wishlist-btn">
+
+                    <% if (wishlist.includes(listing._id.toString())) { %>
+
+                        <i class="fa-solid fa-heart text-danger"></i>
+
+                    <% } else { %>
+
+                        <i class="fa-regular fa-heart"></i>
+
+                    <% } %>
+
+                </button>
+
+            </form>
+
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+
+                <img
+                    src="<%= coverImage %>"
+                    class="listing-img"
+                    alt="<%= listing.title %>"
+                >
+
+            </a>
+
         </div>
-      </div>
-    </a>
 
-  <% } %>
+        <!-- DETAILS -->
+
+        <div class="listing-info">
+
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+
+                <h6 class="mb-1">
+                    <%= listing.title %>
+                </h6>
+
+                <small class="text-muted">
+                    <%= listing.location %>
+                </small>
+
+                <br>
+
+                <strong>
+                    ₹ <%= listing.price.toLocaleString("en-IN") %>
+                </strong>
+
+                / night
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<% }) %>
+
 </div>
 
 <script>
-  let taxSwitch = document.getElementById("switchCheckDefault"); // Corrected ID
-  
-  taxSwitch.addEventListener("click", () => {
-    let taxInfo = document.getElementsByClassName("tax-info");
-    
-    for (info of taxInfo) {
-      if (taxSwitch.checked) {
-        info.style.display = "inline";
-      } else {
-        info.style.display = "none";
-      }
-    }
-  });
+const taxSwitch = document.getElementById("switchCheckDefault");
+
+taxSwitch.addEventListener("change", () => {
+
+    const taxInfo = document.querySelectorAll(".tax-info");
+
+    taxInfo.forEach(info => {
+        info.style.display = taxSwitch.checked ? "inline" : "none";
+    });
+
+});
 </script>

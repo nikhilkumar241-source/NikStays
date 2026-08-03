@@ -1,0 +1,94 @@
+<!-- ================= OWNER CONTROLS ================= -->
+
+
+<% if(currUser && listing.owner._id.equals(currUser._id)){ %>
+
+
+<hr class="my-5">
+
+
+
+
+
+<div class="d-flex flex-wrap gap-3">
+
+
+
+
+
+<a
+
+href="/listings/<%= listing._id %>/edit"
+
+class="btn btn-dark rounded-pill px-4"
+
+>
+
+
+<i class="fa-solid fa-pen-to-square me-2"></i>
+
+
+Edit Listing
+
+
+
+</a>
+
+
+
+
+
+
+
+
+
+<form
+
+method="POST"
+
+action="/listings/<%= listing._id %>?_method=DELETE"
+
+>
+
+
+
+
+
+<button
+
+class="btn btn-outline-danger rounded-pill px-4"
+
+>
+
+
+<i class="fa-solid fa-trash me-2"></i>
+
+
+Delete Listing
+
+
+
+</button>
+
+
+
+
+
+
+</form>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<% } %>

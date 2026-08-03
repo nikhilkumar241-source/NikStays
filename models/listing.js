@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-// Note: You don't strictly need to require("./review") here unless you are setting up 
-// a post-delete middleware later on, but keeping it won't break anything.
 const Review = require("./review.js"); 
 
 const listingSchema = new Schema({
@@ -11,9 +9,22 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
+  url: String,
+  filename: String,
+},
+
+category: {
+    type: String,
+    required: true,
+},
+
+images: [
+  {
     url: String,
     filename: String,
   },
+],
+
   price: Number,
   location: String,
   country: String,
@@ -22,6 +33,13 @@ const listingSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Review", // Ensure this matches exactly with mongoose.model("Review", ...) in review.js
     },
+  ],
+
+    bookings: [
+      {
+          type: Schema.Types.ObjectId,
+          ref: "Booking",
+      },
   ],
   owner:{
     type: Schema.Types.ObjectId,
@@ -37,6 +55,7 @@ const listingSchema = new Schema({
     type: [Number],
     default: [0, 0],
   },
+  
 },
 });
 

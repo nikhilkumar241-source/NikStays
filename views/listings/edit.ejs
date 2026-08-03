@@ -1,66 +1,289 @@
-<% layout("/layouts/boilerplate")%>
-<div class="row mt-3">
-  <div class="col-8 offset-2" >
-  <h3>Edit your Listing</h3>
-  <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
-  
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control" required/>
-      <div class="valid-feedback">title looks Good!</div>
-    </div>
-    
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea name="listing[description]" class="form-control" required> <%= listing.description %></textarea>
-      <div class="invalid-feedback">enter a short description</div>
-    </div>
-    
-    <div class="mb-3">
-      <label class="form-label">Original Listing Image</label><br>
-      <img src="<%= originalImageUrl%>" class="img-thumbnail" style="max-height: 250px;" alt="Listing image"/>
-    </div>
+<% layout("/layouts/boilerplate") %>
 
-    <div class="mb-3">
-      <label for="image" class="form-label">upload new image</label>
-      <input 
-            name="listing[image]" 
-            type="file" 
-            class="form-control"
-            />
-    </div>
+<div class="row mt-4">
+    <div class="col-lg-8 offset-lg-2">
 
-    <div class="row">
-      <div class="mb-3 col-md-4">
-        <label for="price"  class="form-label">price</label>
-        <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control" required/>
-        <div class="invalid-feedback">enter a valid price</div>
-      </div>
-      <div class="mb-3 col-md-8">
-        <label for="country" class="form-label">Enter Country</label>
-        <input
-          name="listing[country]"
-          value="<%= listing.country %>"
-          type="text"
-          class="form-control"
-          required
-        />
-        <div class="invalid-feedback">enter a valid Country</div>
-      </div>
+        <h2 class="mb-4 fw-bold">
+            Edit Listing
+        </h2>
+
+        <form
+            method="POST"
+            action="/listings/<%= listing._id %>?_method=PUT"
+            enctype="multipart/form-data"
+            class="needs-validation"
+            novalidate
+        >
+
+            <!-- Title -->
+
+            <div class="mb-3">
+
+                <label class="form-label">Title</label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    name="listing[title]"
+                    value="<%= listing.title %>"
+                    required
+                >
+
+                <div class="invalid-feedback">
+                    Please enter a title.
+                </div>
+
+            </div>
+
+            <!-- Description -->
+
+            <div class="mb-3">
+
+                <label class="form-label">Description</label>
+
+                <textarea
+                    class="form-control"
+                    rows="5"
+                    name="listing[description]"
+                    required
+                ><%= listing.description %></textarea>
+
+                <div class="invalid-feedback">
+                    Please enter a description.
+                </div>
+
+            </div>
+
+            <!-- Current Images -->
+
+            <div class="mb-4">
+
+                <label class="form-label fw-bold">
+                    Current Images
+                </label>
+
+                <div class="row">
+
+                    <% if(listing.images && listing.images.length){ %>
+
+                        <% listing.images.forEach(img => { %>
+
+                            <div class="col-md-3 col-6 mb-3">
+
+                                <img
+                                    src="<%= img.url %>"
+                                    class="img-fluid rounded shadow"
+                                    style="height:170px; width:100%; object-fit:cover;"
+                                >
+
+                            </div>
+
+                        <% }) %>
+
+                    <% } else if(listing.image){ %>
+
+                        <div class="col-md-3 col-6">
+
+                            <img
+                                src="<%= listing.image.url %>"
+                                class="img-fluid rounded shadow"
+                                style="height:170px; width:100%; object-fit:cover;"
+                            >
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+            <!-- Upload Images -->
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Upload New Images
+                </label>
+
+                <input
+                    id="images"
+                    type="file"
+                    name="listing[images]"
+                    class="form-control"
+                    accept="image/*"
+                    multiple
+                >
+
+                <small class="text-muted">
+                    You can upload multiple images.
+                </small>
+
+            </div>
+
+            <!-- Preview -->
+
+            <div
+                id="previewContainer"
+                class="row mb-4">
+            </div>
+
+            <!-- Category -->
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Category
+                </label>
+
+                <select
+                    class="form-select"
+                    name="listing[category]"
+                    required
+                >
+
+                    <option value="">Select Category</option>
+
+                    <option value="Trending" <%= listing.category==="Trending"?"selected":"" %>>
+                        Trending
+                    </option>
+
+                    <option value="Rooms" <%= listing.category==="Rooms"?"selected":"" %>>
+                        Rooms
+                    </option>
+
+                    <option value="Mountain" <%= listing.category==="Mountain"?"selected":"" %>>
+                        Mountain
+                    </option>
+
+                    <option value="Beach" <%= listing.category==="Beach"?"selected":"" %>>
+                        Beach
+                    </option>
+
+                    <option value="Historical" <%= listing.category==="Historical"?"selected":"" %>>
+                        Historical
+                    </option>
+
+                    <option value="Farmhouse" <%= listing.category==="Farmhouse"?"selected":"" %>>
+                        Farmhouse
+                    </option>
+
+                    <option value="Lake" <%= listing.category==="Lake"?"selected":"" %>>
+                        Lake
+                    </option>
+
+                    <option value="Ocean" <%= listing.category==="Ocean"?"selected":"" %>>
+                        Ocean
+                    </option>
+
+                    <option value="Iconic Cities" <%= listing.category==="Iconic Cities"?"selected":"" %>>
+                        Iconic Cities
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Price + Country -->
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+                        Price
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        name="listing[price]"
+                        value="<%= listing.price %>"
+                        required
+                    >
+
+                </div>
+
+                <div class="col-md-8 mb-3">
+
+                    <label class="form-label">
+                        Country
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="listing[country]"
+                        value="<%= listing.country %>"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+            <!-- Location -->
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Location
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    name="listing[location]"
+                    value="<%= listing.location %>"
+                    required
+                >
+
+            </div>
+
+            <!-- Button -->
+
+            <button class="btn btn-dark px-4">
+
+                Update Listing
+
+            </button>
+
+        </form>
+
     </div>
-    
-    <div class="mb-3">
-      <label for="location" class="form-label">Enter location</label>
-      <input
-        name="listing[location]"
-        value="<%= listing.location %>"
-        type="text"
-        class="form-control" required
-      />
-      <div class="invalid-feedback">enter a valid location</div>
-    </div>
-    
-    <button class="btn btn-dark edit-btn mt-3 ">Edit</button>
-  </form>
-  </div>
 </div>
+
+<script>
+
+const imageInput=document.getElementById("images");
+const preview=document.getElementById("previewContainer");
+
+imageInput.addEventListener("change",function(){
+
+    preview.innerHTML="";
+
+    [...this.files].forEach(file=>{
+
+        const reader=new FileReader();
+
+        reader.onload=function(e){
+
+            preview.innerHTML+=`
+            <div class="col-md-3 col-6 mb-3">
+                <img
+                    src="${e.target.result}"
+                    class="img-fluid rounded shadow"
+                    style="height:170px;width:100%;object-fit:cover;"
+                >
+            </div>
+            `;
+
+        }
+
+        reader.readAsDataURL(file);
+
+    });
+
+});
+
+</script>

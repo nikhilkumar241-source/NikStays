@@ -1,0 +1,427 @@
+<!-- ================= BOOKING CARD ================= -->
+
+
+<div class="booking-card shadow rounded-4 p-4 sticky-top" style="top:90px;">
+
+
+
+<h3
+class="fw-bold mb-3"
+id="listingPrice"
+data-price="<%= listing.price %>">
+
+
+₹ <%= listing.price.toLocaleString("en-IN") %>
+
+
+<small class="text-muted fs-6">
+
+/ night
+
+</small>
+
+
+</h3>
+
+
+
+
+
+<div class="border rounded-4 overflow-hidden mb-3">
+
+
+<div class="row g-0">
+
+
+<div class="col-6 border-end p-3">
+
+
+<label class="fw-bold small mb-2">
+
+CHECK-IN
+
+</label>
+
+
+
+<input
+
+type="date"
+
+id="checkIn"
+
+class="form-control border-0 p-0"
+
+>
+
+
+
+</div>
+
+
+
+
+
+<div class="col-6 p-3">
+
+
+<label class="fw-bold small mb-2">
+
+CHECKOUT
+
+</label>
+
+
+
+<input
+
+type="date"
+
+id="checkOut"
+
+class="form-control border-0 p-0"
+
+>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<hr class="m-0">
+
+
+
+
+
+<div class="p-3">
+
+
+<label class="fw-bold small mb-2">
+
+GUESTS
+
+</label>
+
+
+
+
+<select
+
+id="guests"
+
+class="form-select"
+
+
+>
+
+
+<option value="1">
+
+1 Guest
+
+</option>
+
+
+<option value="2">
+
+2 Guests
+
+</option>
+
+
+<option value="3">
+
+3 Guests
+
+</option>
+
+
+<option value="4">
+
+4 Guests
+
+</option>
+
+
+<option value="5">
+
+5 Guests
+
+</option>
+
+
+<option value="6">
+
+6 Guests
+
+</option>
+
+
+</select>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<button
+
+id="reserveBtn"
+
+class="btn btn-danger w-100 rounded-pill py-3 fs-5"
+
+
+>
+
+
+Reserve
+
+
+</button>
+
+
+
+
+
+<p class="text-center text-muted mt-3">
+
+You won't be charged yet.
+
+</p>
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+<div class="d-flex justify-content-between mb-2">
+
+
+<span>
+
+⭐ 4.92 · 125 reviews
+
+</span>
+
+
+
+<span class="text-success">
+
+Superhost
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+<hr>
+
+
+
+
+
+<div class="d-flex justify-content-between mb-2">
+
+
+<span id="priceBreakdown">
+
+
+₹ <%= listing.price.toLocaleString("en-IN") %> × 1 night
+
+
+</span>
+
+
+
+<span id="nightPrice">
+
+
+₹ <%= listing.price.toLocaleString("en-IN") %>
+
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="d-flex justify-content-between mb-2">
+
+
+<span>
+
+Cleaning fee
+
+</span>
+
+
+<span>
+
+₹500
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="d-flex justify-content-between mb-2">
+
+
+<span>
+
+Service fee
+
+</span>
+
+
+<span>
+
+₹350
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+<div class="d-flex justify-content-between fw-bold fs-5">
+
+
+<span>
+
+Total
+
+</span>
+
+
+
+<span id="totalPrice">
+
+
+₹ <%= (listing.price + 850).toLocaleString("en-IN") %>
+
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+
+
+<div class="mt-4">
+
+
+
+<div class="mb-3">
+
+
+<i class="fa-solid fa-bolt text-warning me-2"></i>
+
+
+Instant confirmation
+
+
+</div>
+
+
+
+
+
+<div class="mb-3">
+
+
+<i class="fa-solid fa-shield-heart text-success me-2"></i>
+
+
+Secure payment
+
+
+</div>
+
+
+
+
+
+<div>
+
+
+<i class="fa-solid fa-headset text-primary me-2"></i>
+
+
+24×7 customer support
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+</div>

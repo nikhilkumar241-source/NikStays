@@ -1,107 +1,297 @@
 <style>
-  .search-btn {
-    border-radius: 25px;
-    background-color: rgb(165, 3, 3);
-    color: white;
-    padding: 0 1rem;
-  }
 
-  .search-btn:hover {
-    background-color: rgb(165, 3, 3);
-    color: white;
-  }
+.search-btn {
+  border-radius:25px;
+  background-color:rgb(165,3,3);
+  color:white;
+  padding:0 1rem;
+}
 
-  .search-btn i {
-    display: inline;
-    margin-right: 0.5rem;
-  }
+.search-btn:hover{
+  background-color:rgb(130,0,0);
+  color:white;
+}
 
-  .search-inp {
-    border-radius: 25px;
-    padding: 0.5rem 3rem;
-    font-size: 1rem;
-  }
 
-  /* Brand */
-  .navbar-brand {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: 0px;
-  }
+.search-btn i{
+  margin-right:.5rem;
+}
 
-  .navbar-brand i {
-    font-size: 2.4rem;
-    color: rgb(155, 3, 3);
-  }
 
-  .brand-name {
-    margin-left: 0px;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: rgb(155, 3, 3);
-    font-family: Arial, Helvetica, sans-serif;
-  }
+.search-inp{
+  border-radius:25px;
+  padding:.5rem 3rem;
+  font-size:1rem;
+}
+
+
+.navbar-brand{
+  display:flex;
+  align-items:center;
+  text-decoration:none;
+}
+
+
+.navbar-brand i{
+
+  font-size:2.4rem;
+  color:rgb(155,3,3);
+
+}
+
+
+.brand-name{
+
+  font-size:1.4rem;
+  font-weight:600;
+  color:rgb(155,3,3);
+  font-family:Arial, Helvetica, sans-serif;
+  margin-left:4px;
+
+}
+
+
+.nav-link{
+
+  font-weight:500;
+
+}
+
+
+.nav-link:hover{
+
+  color:rgb(165,3,3);
+
+}
+
 </style>
 
+
+
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
 
-    <!-- Logo -->
-    <a class="navbar-brand" href="/listings">
-      <i class="fa-sharp-duotone fa-solid fa-naira-sign"
-         style="--fa-primary-color: rgb(66, 178, 77); --fa-secondary-color: rgb(66, 178, 77);">
-      </i>
-      <span class="brand-name">NikStays</span>
-    </a>
 
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="container-fluid">
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
-      <!-- Left Links -->
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings"></a>
-      </div>
 
-      <!-- Search Bar -->
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search" action="/listings" method="GET">
-          <input
-            id="searchInput"
-            class="form-control me-2 search-inp"
-            type="search"
-            name="search"
-            placeholder="Search destinations"
-          />
+<!-- LOGO -->
 
-          <button class="btn search-btn" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            Search
-          </button>
-        </form>
-      </div>
+<a class="navbar-brand" href="/listings">
 
-      <!-- Right Links -->
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Niks New Listing</a>
+<i class="fa-solid fa-naira-sign"></i>
 
-        <% if (!currUser) { %>
-          <a class="nav-link" href="/signup"><b>Sign Up</b></a>
-          <a class="nav-link" href="/login"><b>Log In</b></a>
-        <% } %>
+<span class="brand-name">
+NikStays
+</span>
 
-        <% if (currUser) { %>
-          <a class="nav-link" href="/logout"><b>Log Out</b></a>
-        <% } %>
-      </div>
+</a>
 
-    </div>
-  </div>
+
+
+
+<!-- MOBILE BUTTON -->
+
+<button
+class="navbar-toggler"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#navbarNavAltMarkup">
+
+<span class="navbar-toggler-icon"></span>
+
+</button>
+
+
+
+
+
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+
+
+
+
+<!-- SEARCH -->
+
+<div class="navbar-nav mx-auto">
+
+
+<form
+class="d-flex"
+role="search"
+action="/listings"
+method="GET">
+
+
+<input
+
+class="form-control me-2 search-inp"
+
+type="search"
+
+name="search"
+
+placeholder="Search destinations"
+
+value="<%= typeof search !== 'undefined' ? search : '' %>"
+
+/>
+
+
+
+<button
+class="btn search-btn"
+type="submit">
+
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Search
+
+
+</button>
+
+
+</form>
+
+
+</div>
+
+
+
+
+
+
+<!-- RIGHT SIDE -->
+
+<div class="navbar-nav ms-auto">
+
+
+
+
+
+<a
+class="nav-link"
+href="/listings/new">
+
+<i class="fa-solid fa-plus"></i>
+
+New Listing
+
+</a>
+
+
+
+
+
+<% if(!currUser){ %>
+
+
+
+
+
+<a
+class="nav-link"
+href="/signup">
+
+<b>
+Sign Up
+</b>
+
+</a>
+
+
+
+
+
+<a
+class="nav-link"
+href="/login">
+
+<b>
+Log In
+</b>
+
+</a>
+
+
+
+
+
+<% } else { %>
+
+
+
+
+
+<!-- WISHLIST -->
+
+<a
+class="nav-link"
+href="/wishlist">
+
+
+❤️ Wishlist
+
+
+</a>
+
+
+
+
+
+
+<!-- TRIPS -->
+
+<a
+class="nav-link"
+href="/trips">
+
+
+✈️ Trips
+
+
+</a>
+
+
+
+
+
+
+<!-- USER -->
+
+<a
+class="nav-link"
+href="/logout">
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+
+</a>
+
+
+
+
+
+<% } %>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
 </nav>

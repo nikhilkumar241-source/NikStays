@@ -1,0 +1,94 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<div class="container py-5">
+
+<h2 class="fw-bold mb-4">
+❤️ My Wishlist
+</h2>
+
+
+<div class="row">
+
+
+<% wishlist.forEach(item=>{ %>
+
+
+<div class="col-lg-4 col-md-6 mb-4">
+
+
+<div class="card shadow rounded-4 overflow-hidden">
+
+
+<img
+src="<%= item.listing.images[0].url %>"
+class="card-img-top"
+height="250"
+style="object-fit:cover;"
+>
+
+
+<div class="card-body">
+
+
+<h5>
+<%= item.listing.title %>
+</h5>
+
+
+<p class="text-muted">
+
+<%= item.listing.location %>
+
+</p>
+
+
+<h6>
+₹ <%= item.listing.price %> / night
+</h6>
+
+
+
+<a
+href="/listings/<%= item.listing._id %>"
+class="btn btn-dark rounded-pill">
+
+View
+
+</a>
+
+
+
+<form
+method="POST"
+action="/wishlist/<%= item.listing._id %>?_method=DELETE"
+class="d-inline">
+
+
+<button
+class="btn btn-outline-danger rounded-pill">
+
+Remove
+
+</button>
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<% }) %>
+
+
+</div>
+
+
+</div>

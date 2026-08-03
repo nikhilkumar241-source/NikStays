@@ -1,0 +1,140 @@
+<!-- ================= IMAGE GALLERY ================= -->
+
+
+<%
+let galleryImages = [];
+
+if (listing.images && listing.images.length > 0) {
+
+    galleryImages = listing.images;
+
+} else if (listing.image) {
+
+    galleryImages = [listing.image];
+
+}
+
+%>
+
+
+
+<div class="airbnb-gallery rounded-4 overflow-hidden">
+
+
+    <!-- Main Image -->
+
+    <div class="gallery-main">
+
+
+        <img
+
+            src="<%= galleryImages[0].url %>"
+
+            class="gallery-image"
+
+            data-index="0"
+
+            data-bs-toggle="modal"
+
+            data-bs-target="#imageModal"
+
+            alt="Listing Image"
+
+
+        >
+
+
+    </div>
+
+
+
+
+
+    <!-- Small Images -->
+
+    <div class="gallery-grid">
+
+
+        <% for(let i = 1; i < 5; i++){ %>
+
+
+
+            <% if(galleryImages[i]){ %>
+
+
+
+                <div class="gallery-small">
+
+
+                    <img
+
+                        src="<%= galleryImages[i].url %>"
+
+                        class="gallery-image"
+
+                        data-index="<%= i %>"
+
+                        data-bs-toggle="modal"
+
+                        data-bs-target="#imageModal"
+
+                        alt="Listing Image"
+
+
+                    >
+
+
+                </div>
+
+
+
+            <% } else { %>
+
+
+                <div class="gallery-small bg-light"></div>
+
+
+            <% } %>
+
+
+
+        <% } %>
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+<!-- Show All Photos Button -->
+
+
+<div class="text-end mt-3 mb-5">
+
+
+    <button
+
+        class="btn btn-outline-dark rounded-pill"
+
+        data-bs-toggle="modal"
+
+        data-bs-target="#imageModal"
+
+
+    >
+
+
+        <i class="fa-solid fa-images"></i>
+
+        Show all photos
+
+
+    </button>
+
+
+</div>

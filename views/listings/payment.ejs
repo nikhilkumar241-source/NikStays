@@ -1,0 +1,130 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-6">
+
+<div class="card shadow rounded-4 border-0">
+
+<div class="card-body p-5">
+
+<h2 class="fw-bold mb-4 text-center">
+
+💳 Payment
+
+</h2>
+
+<h4 class="mb-4">
+
+<%= listing.title %>
+
+</h4>
+
+<p>
+
+<strong>Price per night:</strong>
+
+₹ <%= listing.price.toLocaleString("en-IN") %>
+
+</p>
+
+<hr>
+
+<form id="paymentForm">
+
+<div class="mb-3">
+
+<label>
+
+Card Holder Name
+
+</label>
+
+<input
+class="form-control"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Card Number
+
+</label>
+
+<input
+class="form-control"
+maxlength="16"
+placeholder="1234123412341234"
+required>
+
+</div>
+
+<div class="row">
+
+<div class="col">
+
+<label>
+
+Expiry
+
+</label>
+
+<input
+class="form-control"
+placeholder="MM/YY"
+required>
+
+</div>
+
+<div class="col">
+
+<label>
+
+CVV
+
+</label>
+
+<input
+class="form-control"
+maxlength="3"
+required>
+
+</div>
+
+</div>
+
+<button
+class="btn btn-danger w-100 rounded-pill mt-4">
+
+Pay Now
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+document.getElementById("paymentForm")
+.addEventListener("submit",(e)=>{
+    e.preventDefault();
+
+    alert("🎉 Payment Successful!");
+
+    window.location.href="/listings";
+});
+</script>
