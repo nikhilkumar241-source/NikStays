@@ -1,5 +1,7 @@
-const bookingSchema = new mongoose.Schema({
+const mongoose = require("mongoose");
 
+const bookingSchema = new mongoose.Schema(
+{
     listing:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Listing",
@@ -42,8 +44,10 @@ const bookingSchema = new mongoose.Schema({
         ],
         default:"pending"
     }
-
 },
 {
     timestamps:true
-});
+}
+);
+
+module.exports = mongoose.model("Booking", bookingSchema);
