@@ -39,6 +39,39 @@ module.exports.login = async(req, res)=>{
     res.redirect(redirectUrl);
 };
 
+
+// Render Change Password Page
+module.exports.renderChangePasswordForm = (req, res) => {
+    res.render("users/changePassword.ejs");
+};
+
+// Change Password
+module.exports.changePassword = async (req, res) => {
+    try {
+
+        const { currentPassword, newPassword, confirmPassword } = req.body;
+
+        if (newPassword !== confirmPassword) {
+            req.flash("error", "New passwords do not match.");
+            return res.redirect("/change-password");
+        }
+
+        const user = await User.findById(req.user._id);
+
+        await user.changePassword(currentPassword, newPassword);
+
+        req.flash("success", "Password changed successfully.");
+        res.redirect("/listings");
+
+    } catch (err) {
+
+        req.flash("error", "Current password is incorrect.");
+        res.redirect("/change-password");
+
+    }
+};
+
+
 module.exports.logout = (req, res)=>{
     req.logout((err)=>{
         if(err){
