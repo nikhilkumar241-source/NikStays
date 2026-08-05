@@ -1,0 +1,126 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow rounded-4">
+
+                <div class="card-body p-5">
+
+                    <div class="text-center">
+
+                        <img
+                            src="https://ui-avatars.com/api/?name=<%= user.username %>&background=8B0000&color=fff&size=180"
+                            class="rounded-circle mb-3"
+                            width="140"
+                            height="140"
+                        >
+
+                        <h2 class="fw-bold">
+                            <%= user.username %>
+                        </h2>
+
+                        <p class="text-muted">
+                            <%= user.email %>
+                        </p>
+
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="row text-center">
+
+                        <div class="col-md-4 mb-4">
+
+                            <h3 class="text-danger">
+                                <%= listings %>
+                            </h3>
+
+                            <p class="text-muted">
+                                Listings
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+
+                            <h3 class="text-primary">
+                                <%= bookings %>
+                            </h3>
+
+                            <p class="text-muted">
+                                Trips
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+
+                            <h3 class="text-success">
+                                <%= user.createdAt ? user.createdAt.getFullYear() : "2026" %>
+                            </h3>
+
+                            <p class="text-muted">
+                                Member Since
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <h6 class="text-muted">
+                                Username
+                            </h6>
+
+                            <p class="fw-semibold">
+                                <%= user.username %>
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <h6 class="text-muted">
+                                Email
+                            </h6>
+
+                            <p class="fw-semibold">
+                                <%= user.email %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid mt-4">
+
+                        <a
+                            href="/trips"
+                            class="btn btn-dark btn-lg">
+
+                            <i class="fa-solid fa-suitcase"></i>
+
+                            View My Trips
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

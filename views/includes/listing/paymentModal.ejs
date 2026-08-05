@@ -1,0 +1,114 @@
+<div class="modal fade" id="paymentModal" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content shadow-lg border-0 rounded-4">
+
+            <div class="modal-header">
+
+                <h4 class="modal-title">
+                    Complete Payment
+                </h4>
+
+                <button
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <h5 class="mb-3">
+                    Choose Payment Method
+                </h5>
+
+                <div class="list-group">
+
+                    <label class="list-group-item">
+                        <input
+                            class="form-check-input me-2"
+                            type="radio"
+                            name="paymentMethod"
+                            value="UPI"
+                            checked>
+                        UPI
+                    </label>
+
+                    <label class="list-group-item">
+                        <input
+                            class="form-check-input me-2"
+                            type="radio"
+                            name="paymentMethod"
+                            value="Credit Card">
+                        Credit Card
+                    </label>
+
+                    <label class="list-group-item">
+                        <input
+                            class="form-check-input me-2"
+                            type="radio"
+                            name="paymentMethod"
+                            value="Debit Card">
+                        Debit Card
+                    </label>
+
+                    <label class="list-group-item">
+                        <input
+                            class="form-check-input me-2"
+                            type="radio"
+                            name="paymentMethod"
+                            value="Net Banking">
+                        Net Banking
+                    </label>
+
+                    <label class="list-group-item">
+                        <input
+                            class="form-check-input me-2"
+                            type="radio"
+                            name="paymentMethod"
+                            value="Wallet">
+                        Wallet
+                    </label>
+
+                </div>
+
+                <hr>
+
+                <h5>
+
+                    Total Amount
+
+                    <span
+                        class="float-end text-danger"
+                        id="paymentAmount">
+                        ₹0
+                    </span>
+
+                </h5>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button
+                    class="btn btn-danger"
+                    id="payNowBtn">
+
+                    Pay Now
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

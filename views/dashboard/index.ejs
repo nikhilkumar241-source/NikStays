@@ -1,0 +1,588 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold mb-1">
+                <i class="fa-solid fa-chart-line text-danger"></i>
+                Host Dashboard
+            </h1>
+
+            <p class="text-muted mb-0">
+                Welcome back! Here's an overview of your business.
+            </p>
+
+        </div>
+
+        <a href="/listings/new" class="btn btn-danger rounded-pill">
+            <i class="fa-solid fa-plus"></i>
+            Add Listing
+        </a>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 rounded-4 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-indian-rupee-sign fa-2x text-success mb-3"></i>
+
+                    <h6 class="text-muted">
+                        Total Revenue
+                    </h6>
+
+                    <h2 class="text-success">
+                        ₹<%= totalRevenue.toLocaleString("en-IN") %>
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 rounded-4 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-calendar-check fa-2x text-primary mb-3"></i>
+
+                    <h6 class="text-muted">
+                        Total Bookings
+                    </h6>
+
+                    <h2>
+                        <%= totalBookings %>
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 rounded-4 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-house fa-2x text-danger mb-3"></i>
+
+                    <h6 class="text-muted">
+                        My Listings
+                    </h6>
+
+                    <h2>
+                        <%= totalListings %>
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 rounded-4 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-users fa-2x text-warning mb-3"></i>
+
+                    <h6 class="text-muted">
+                        Total Guests
+                    </h6>
+
+                    <h2>
+                        <%= totalGuests %>
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Extra Statistics -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-lg-4">
+
+            <div class="card shadow border-0 rounded-4 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-money-bill-wave fa-2x text-success mb-3"></i>
+
+                    <h6 class="text-muted">
+                        Average Booking Value
+                    </h6>
+
+                    <h3>
+                        ₹<%= averageBookingValue.toLocaleString("en-IN") %>
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card shadow border-0 rounded-4 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-clock fa-2x text-primary mb-3"></i>
+
+                    <h6 class="text-muted">
+                        Upcoming Bookings
+                    </h6>
+
+                    <h3>
+                        <%= upcomingBookings %>
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card shadow border-0 rounded-4 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-crown fa-2x text-warning mb-3"></i>
+
+                    <h6 class="text-muted">
+                        Most Booked Listing
+                    </h6>
+
+                    <h5>
+
+                        <% if(mostBookedListing){ %>
+
+                            <%= mostBookedListing.title %>
+
+                        <% } else { %>
+
+                            No Bookings Yet
+
+                        <% } %>
+
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+        <!-- Recent Bookings -->
+
+    <div class="card shadow border-0 rounded-4 mb-5">
+
+        <div class="card-header bg-white">
+
+            <h4 class="mb-0">
+
+                <i class="fa-solid fa-calendar-days text-danger"></i>
+
+                Recent Bookings
+
+            </h4>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Guest</th>
+
+                        <th>Listing</th>
+
+                        <th>Guests</th>
+
+                        <th>Check-In</th>
+
+                        <th>Amount</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <% if(bookings.length===0){ %>
+
+                        <tr>
+
+                            <td colspan="6" class="text-center py-5">
+
+                                No bookings yet.
+
+                            </td>
+
+                        </tr>
+
+                    <% } %>
+
+                    <% bookings.forEach(booking=>{ %>
+
+                        <tr>
+
+                            <td>
+
+                                <strong>
+
+                                    <%= booking.user.username %>
+
+                                </strong>
+
+                            </td>
+
+                            <td>
+
+                                <%= booking.listing.title %>
+
+                            </td>
+
+                            <td>
+
+                                <%= booking.guests %>
+
+                            </td>
+
+                            <td>
+
+                                <%= booking.checkIn.toDateString() %>
+
+                            </td>
+
+                            <td>
+
+                                ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-success">
+
+                                    <%= booking.status %>
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Recent Activity -->
+
+    <div class="card shadow border-0 rounded-4 mb-5">
+
+        <div class="card-header bg-white">
+
+            <h4 class="mb-0">
+
+                <i class="fa-solid fa-bolt text-warning"></i>
+
+                Recent Activity
+
+            </h4>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <% if(recentBookings.length===0){ %>
+
+                <div class="p-4 text-center">
+
+                    No recent activity.
+
+                </div>
+
+            <% } else { %>
+
+                <ul class="list-group list-group-flush">
+
+                    <% recentBookings.forEach(booking=>{ %>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <strong>
+
+                                    <%= booking.user.username %>
+
+                                </strong>
+
+                                booked
+
+                                <strong>
+
+                                    <%= booking.listing.title %>
+
+                                </strong>
+
+                                <br>
+
+                                <small class="text-muted">
+
+                                    <%= booking.createdAt.toDateString() %>
+
+                                </small>
+
+                            </div>
+
+                            <span class="badge bg-success fs-6">
+
+                                ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+
+                            </span>
+
+                        </li>
+
+                    <% }) %>
+
+                </ul>
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+
+        <!-- My Listings -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h3 class="fw-bold mb-0">
+
+            <i class="fa-solid fa-house text-danger"></i>
+
+            My Listings
+
+        </h3>
+
+        <span class="badge bg-dark fs-6">
+
+            <%= totalListings %> Listings
+
+        </span>
+
+    </div>
+
+    <div class="row">
+
+        <% if(listings.length===0){ %>
+
+            <div class="col-12">
+
+                <div class="alert alert-info text-center rounded-4 shadow-sm">
+
+                    <h5>No listings yet.</h5>
+
+                    <p class="mb-3">
+                        Create your first property and start earning.
+                    </p>
+
+                    <a
+                        href="/listings/new"
+                        class="btn btn-danger rounded-pill"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Add Listing
+                    </a>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
+        <% listings.forEach(listing=>{ %>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+
+            <div class="card shadow border-0 rounded-4 h-100">
+
+                <img
+                    src="<%= listing.images?.[0]?.url || listing.image?.url || 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200' %>"
+                    class="card-img-top"
+                    style="height:220px; object-fit:cover;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="fw-bold">
+
+                        <%= listing.title %>
+
+                    </h5>
+
+                    <p class="text-muted mb-3">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <%= listing.location %>
+
+                    </p>
+
+                    <h6 class="text-success mb-4">
+
+                        ₹<%= listing.price.toLocaleString("en-IN") %> / night
+
+                    </h6>
+
+                    <div class="mt-auto d-grid gap-2">
+
+                        <a
+                            href="/listings/<%= listing._id %>"
+                            class="btn btn-dark"
+                        >
+
+                            <i class="fa-solid fa-eye"></i>
+
+                            View Listing
+
+                        </a>
+
+                        <a
+                            href="/listings/<%= listing._id %>/edit"
+                            class="btn btn-outline-primary"
+                        >
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Edit Listing
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    </div>
+
+
+
+        <!-- Dashboard Summary -->
+
+    <div class="card shadow border-0 rounded-4 mt-5">
+
+        <div class="card-body text-center p-5">
+
+            <i class="fa-solid fa-chart-pie fa-3x text-danger mb-4"></i>
+
+            <h3 class="fw-bold">
+                Dashboard Summary
+            </h3>
+
+            <p class="text-muted mb-4">
+
+                You currently have
+
+                <strong><%= totalListings %></strong> listings,
+
+                <strong><%= totalBookings %></strong> confirmed bookings,
+
+                hosted
+
+                <strong><%= totalGuests %></strong> guests,
+
+                and earned
+
+                <strong class="text-success">
+
+                    ₹<%= totalRevenue.toLocaleString("en-IN") %>
+
+                </strong>.
+
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+                <a
+                    href="/listings/new"
+                    class="btn btn-danger rounded-pill px-4"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    Add Listing
+                </a>
+
+                <a
+                    href="/owner/bookings"
+                    class="btn btn-outline-dark rounded-pill px-4"
+                >
+                    <i class="fa-solid fa-calendar-check"></i>
+                    View Bookings
+                </a>
+
+                <a
+                    href="/listings"
+                    class="btn btn-outline-secondary rounded-pill px-4"
+                >
+                    <i class="fa-solid fa-house"></i>
+                    Browse Listings
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

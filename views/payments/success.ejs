@@ -1,0 +1,126 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<div class="container py-5">
+
+
+<div class="row justify-content-center">
+
+
+<div class="col-md-7">
+
+
+<div class="card shadow border-0 rounded-4 text-center p-5">
+
+
+<h1 class="display-4">
+🎉
+</h1>
+
+
+<h2 class="fw-bold text-success">
+Booking Confirmed!
+</h2>
+
+
+<p class="text-muted mt-3">
+Your stay has been successfully booked with NiksStays.
+</p>
+
+
+
+<hr>
+
+
+
+<h4>
+<%= booking.listing.title %>
+</h4>
+
+
+<p class="text-muted">
+📍 <%= booking.listing.location %>,
+<%= booking.listing.country %>
+</p>
+
+
+
+<div class="mt-4">
+
+
+<p>
+<strong>
+Check-in:
+</strong>
+
+<%= booking.checkIn.toDateString() %>
+
+</p>
+
+
+
+<p>
+<strong>
+Check-out:
+</strong>
+
+<%= booking.checkOut.toDateString() %>
+
+</p>
+
+
+
+<p>
+<strong>
+Guests:
+</strong>
+
+<%= booking.guests %>
+
+</p>
+
+
+<h4 class="text-danger">
+₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
+</h4>
+
+
+</div>
+
+
+
+
+<div class="mt-4">
+
+
+<a href="/trips"
+class="btn btn-dark rounded-pill px-4">
+
+View My Trips
+
+</a>
+
+
+
+<a href="/booking/<%= booking._id %>/invoice"
+class="btn btn-outline-dark rounded-pill px-4 ms-2">
+
+Download Invoice
+
+</a>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>

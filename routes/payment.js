@@ -33,7 +33,6 @@ router.get("/:bookingId", wrapAsync(async (req, res) => {
 }));
 
 
-
 // ================= PAYMENT SUCCESS =================
 
 router.post("/:bookingId/success", wrapAsync(async (req, res) => {
@@ -62,13 +61,11 @@ router.post("/:bookingId/success", wrapAsync(async (req, res) => {
 
 
 
-    // Send confirmation email
-
     await sendEmail(
 
         req.user.email,
 
-        "Booking Confirmed - NiksStays",
+        "Booking Confirmed - NikStays",
 
         `
         <h2>Your booking is confirmed 🎉</h2>
@@ -109,7 +106,7 @@ router.post("/:bookingId/success", wrapAsync(async (req, res) => {
 
 
         <p>
-        Thank you for booking with NiksStays ❤️
+        Thank you for booking with NikStays ❤️
         </p>
         `
 
@@ -123,11 +120,63 @@ router.post("/:bookingId/success", wrapAsync(async (req, res) => {
     );
 
 
-    res.redirect(`/listings/${booking.listing._id}`);
+    // Go to trips page
+
+    res.redirect("/trips");
 
 
 }));
 
+
+
+
+
+// ================= PAYMENT SUCCESS PAGE =================
+
+router.get("/:bookingId/success", wrapAsync(async(req,res)=>{
+
+
+    if(!req.isAuthenticated()){
+
+        req.flash(
+            "error",
+            "Please login first"
+        );
+
+        return res.redirect("/login");
+
+    }
+
+
+    const booking = await Booking.findById(
+        req.params.bookingId
+    )
+    .populate("listing");
+
+
+
+    if(!booking){
+
+        req.flash(
+            "error",
+            "Booking not found"
+        );
+
+        return res.redirect("/listings");
+
+    }
+
+
+
+    res.render(
+        "payments/success",
+        {
+            booking
+        }
+    );
+
+
+}));
 
 
 module.exports = router;

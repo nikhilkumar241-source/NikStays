@@ -1,0 +1,161 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0 rounded-4">
+
+                <img
+                src="<%= booking.listing.images?.length ? booking.listing.images[0].url : booking.listing.image.url %>"
+                class="card-img-top"
+                style="height:400px;object-fit:cover;">
+
+                <div class="card-body">
+
+                    <h2 class="fw-bold">
+                        <%= booking.listing.title %>
+                    </h2>
+
+                    <p class="text-muted">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <%= booking.listing.location %>,
+                        <%= booking.listing.country %>
+                    </p>
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <h5>Check-in</h5>
+
+                            <p>
+                                <%= booking.checkIn.toDateString() %>
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <h5>Check-out</h5>
+
+                            <p>
+                                <%= booking.checkOut.toDateString() %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5>Guests</h5>
+
+                    <p>
+                        <%= booking.guests %> Guest(s)
+                    </p>
+
+                    <h5>Status</h5>
+
+                    <% if(booking.status==="confirmed"){ %>
+
+                        <span class="badge bg-success fs-6">
+                            Confirmed
+                        </span>
+
+                    <% } else { %>
+
+                        <span class="badge bg-danger fs-6">
+                            Cancelled
+                        </span>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="col-lg-4">
+
+            <div class="card shadow border-0 rounded-4 sticky-top"
+            style="top:100px;">
+
+                <div class="card-body">
+
+                    <h4 class="fw-bold mb-4">
+                        Booking Summary
+                    </h4>
+
+                    <p>
+                        <strong>Booking ID</strong><br>
+                        <%= booking._id %>
+                    </p>
+
+                    <p>
+                        <strong>Transaction ID</strong><br>
+                        <%= booking.transactionId %>
+                    </p>
+
+                    <p>
+                        <strong>Payment Status</strong><br>
+
+                        <span class="badge bg-success">
+
+                            <%= booking.paymentStatus %>
+
+                        </span>
+                    </p>
+
+                    <hr>
+
+                    <h3 class="text-danger">
+
+                        ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+
+                    </h3>
+
+                    <hr>
+
+                    <a
+                    href="/booking/<%= booking._id %>/invoice"
+                    class="btn btn-dark w-100 mb-2">
+
+                        Download Invoice
+
+                    </a>
+
+                    <% if(booking.status!=="cancelled"){ %>
+
+                    <form
+                    action="/booking/<%= booking._id %>?_method=DELETE"
+                    method="POST">
+
+                        <button
+                        class="btn btn-danger w-100"
+                        onclick="return confirm('Cancel Booking?')">
+
+                            Cancel Booking
+
+                        </button>
+
+                    </form>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

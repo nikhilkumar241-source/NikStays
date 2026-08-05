@@ -185,194 +185,69 @@ function calculatePrice(){
 
 if(reserveBtn){
 
-
-
-reserveBtn.addEventListener(
-"click",
-async()=>{
-
-
-    if(
-        !checkIn.value ||
-        !checkOut.value
-    ){
-
-
-        alert(
-            "Please select Check-in and Check-out dates"
-        );
-
-
-        return;
-
-    }
-
-
-
-
-    const start = new Date(
-        checkIn.value
-    );
-
-
-    const end = new Date(
-        checkOut.value
-    );
-
-
-
-    const nights = Math.ceil(
-        (end-start) /
-        (1000*60*60*24)
-    );
-
-
-
-    if(nights <= 0){
-
-
-        alert(
-            "Invalid dates"
-        );
-
-
-        return;
-
-    }
-
-
-
+document.addEventListener("paymentSuccess", async (e) => {
 
     reserveBtn.disabled = true;
 
-
     reserveBtn.innerHTML = `
-
     <span class="spinner-border spinner-border-sm"></span>
-    Reserving...
-
+    Confirming Booking...
     `;
 
+    try {
 
+        const response = await fetch(`/booking/${listing._id}`, {
 
-    try{
+            method: "POST",
 
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-        const response = await fetch(
+            body: JSON.stringify({
 
-            `/booking/${listing._id}`,
+                checkIn: checkIn.value,
 
-            {
+                checkOut: checkOut.value,
 
-                method:"POST",
+                guests: guests.value,
 
-                headers:{
+                paymentMethod: e.detail.paymentMethod
 
-                    "Content-Type":"application/json"
+            })
 
-                },
+        });
 
-
-                body:JSON.stringify({
-
-                    checkIn:checkIn.value,
-
-                    checkOut:checkOut.value,
-
-                    guests:guests.value
-
-                })
-
-
-            }
-
-        );
-
-
-
-
-
-        if(response.redirected){
-
-
-            window.location.href =
-            response.url;
-
-
+        if (response.redirected) {
+            window.location.href = response.url;
             return;
-
-
         }
 
+        const data = await response.json();
 
-
-
-        const data =
-        await response.json();
-
-
-
-
-        if(data.success){
-
-
-            alert(
-                "Booking confirmed 🎉"
-            );
-
-
-            window.location.href =
-            "/trips";
-
-
+        if (!data.success) {
+            alert(data.error || "Booking failed");
         }
-        else{
-
-
-            alert(
-                "Booking failed"
-            );
-
-
-        }
-
-
 
     }
-    catch(err){
-
+    catch (err) {
 
         console.log(err);
 
-
-        alert(
-            "Something went wrong"
-        );
-
+        alert("Something went wrong");
 
     }
+    finally {
 
+        reserveBtn.disabled = false;
 
-
-    finally{
-
-
-        reserveBtn.disabled=false;
-
-
-        reserveBtn.innerHTML =
-        "Reserve";
-
+        reserveBtn.innerHTML = "Reserve";
 
     }
-
-
 
 });
 
-
 }
-
 
 
 });

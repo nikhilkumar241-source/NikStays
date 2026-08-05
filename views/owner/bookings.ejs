@@ -1,0 +1,312 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<div class="container py-5">
+
+
+<h2 class="fw-bold mb-4">
+    Host Dashboard 🏠
+</h2>
+
+
+
+<h4 class="mb-4">
+    Booking Requests
+</h4>
+
+
+
+<div class="row">
+
+
+
+<% if(bookings.length === 0){ %>
+
+
+<div class="text-center py-5">
+
+<h5 class="text-muted">
+No bookings received yet
+</h5>
+
+</div>
+
+
+<% } %>
+
+
+
+
+
+
+<% bookings.forEach(booking=>{ %>
+
+
+
+<div class="col-lg-6 mb-4">
+
+
+
+<div class="card shadow border-0 rounded-4">
+
+
+
+<div class="card-body p-4">
+
+
+
+<h4 class="fw-bold">
+
+<%= booking.listing.title %>
+
+</h4>
+
+
+
+<p class="text-muted">
+
+📍 <%= booking.listing.location %>,
+<%= booking.listing.country %>
+
+</p>
+
+
+
+<hr>
+
+
+
+
+<h5>
+Guest Details
+</h5>
+
+
+<p>
+
+👤
+
+<strong>
+<%= booking.user.username %>
+</strong>
+
+</p>
+
+
+<p>
+
+📧
+
+<%= booking.user.email %>
+
+</p>
+
+
+
+
+<hr>
+
+
+
+
+<div class="row">
+
+
+<div class="col-6">
+
+<small class="text-muted">
+CHECK-IN
+</small>
+
+<p>
+
+<%= booking.checkIn.toDateString() %>
+
+</p>
+
+</div>
+
+
+
+<div class="col-6">
+
+<small class="text-muted">
+CHECK-OUT
+</small>
+
+<p>
+
+<%= booking.checkOut.toDateString() %>
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<p>
+
+👥 Guests:
+
+<strong>
+<%= booking.guests %>
+</strong>
+
+</p>
+
+
+
+
+<h5 class="text-danger">
+
+₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
+
+</h5>
+
+
+
+
+<%
+
+let badge="bg-warning";
+
+if(booking.status==="confirmed"){
+    badge="bg-success";
+}
+
+if(booking.status==="completed"){
+    badge="bg-primary";
+}
+
+if(booking.status==="cancelled"){
+    badge="bg-danger";
+}
+
+%>
+
+
+
+<span class="badge <%= badge %>">
+
+<%= booking.status.toUpperCase() %>
+
+</span>
+
+
+
+
+
+<div class="mt-4 d-flex gap-2 flex-wrap">
+
+
+
+
+
+<form
+method="POST"
+action="/booking/<%= booking._id %>/status?_method=PATCH">
+
+
+<input
+type="hidden"
+name="status"
+value="confirmed">
+
+
+<button
+class="btn btn-success rounded-pill">
+
+Accept
+
+</button>
+
+
+</form>
+
+
+
+
+
+
+<form
+method="POST"
+action="/booking/<%= booking._id %>/status?_method=PATCH">
+
+
+<input
+type="hidden"
+name="status"
+value="completed">
+
+
+<button
+class="btn btn-primary rounded-pill">
+
+Complete
+
+</button>
+
+
+</form>
+
+
+
+
+
+
+<form
+method="POST"
+action="/booking/<%= booking._id %>/status?_method=PATCH">
+
+
+<input
+type="hidden"
+name="status"
+value="cancelled">
+
+
+<button
+class="btn btn-outline-danger rounded-pill">
+
+Reject
+
+</button>
+
+
+</form>
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+<% }) %>
+
+
+
+
+</div>
+
+
+
+</div>

@@ -1,40 +1,51 @@
-const express=require("express");
-const router=express.Router();
+const express = require("express");
+const router = express.Router();
 
-const Booking=require("../models/booking");
+const Booking = require("../models/booking");
+const wrapAsync = require("../utils/wrapAsync");
+
+const { isLoggedIn } = require("../middleware");
 
 
-router.get("/",async(req,res)=>{
+// Trips Page
+router.get(
+    "/",
+    isLoggedIn,
+    wrapAsync(async (req, res) => {
+
+        const bookings = await Booking.find({
+            user: req.user._id
+        })
+        .populate("listing")
+        .sort({
+            createdAt: -1
+        });
 
 
-if(!req.isAuthenticated()){
+        const upcomingBookings = bookings.filter(
+            booking =>
+                booking.status !== "cancelled" &&
+                new Date(booking.checkOut) >= new Date()
+        );
 
-req.flash(
-"error",
-"Please login first"
+
+        const pastBookings = bookings.filter(
+            booking =>
+                booking.status === "cancelled" ||
+                new Date(booking.checkOut) < new Date()
+        );
+
+
+        res.render(
+            "bookings/trips.ejs",
+            {
+                upcomingBookings,
+                pastBookings
+            }
+        );
+
+    })
 );
 
-return res.redirect("/login");
 
-}
-
-
-const bookings = await Booking.find({
-    user:req.user._id
-})
-.populate("listing");
-
-
-
-res.render(
-"bookings/trips",
-{
-    bookings
-}
-);
-
-
-});
-
-
-module.exports=router;
+module.exports = router;

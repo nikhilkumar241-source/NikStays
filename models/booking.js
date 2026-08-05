@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const bookingSchema = new mongoose.Schema({
 
     listing:{
@@ -34,18 +32,18 @@ const bookingSchema = new mongoose.Schema({
         required:true
     },
 
-    status: {
-    type: String,
-    enum: [
-        "pending",
-        "confirmed",
-        "completed",
-        "cancelled"
-    ],
-    default: "pending"
+    status:{
+        type:String,
+        enum:[
+            "pending",
+            "confirmed",
+            "completed",
+            "cancelled"
+        ],
+        default:"pending"
+    }
+
 },
-    
-
+{
+    timestamps:true
 });
-
-module.exports = mongoose.model("Booking", bookingSchema);
