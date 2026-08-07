@@ -1,57 +1,4 @@
-<style>
-
-.search-btn {
-  border-radius:25px;
-  background-color:rgb(165,3,3);
-  color:white;
-  padding:0 1rem;
-}
-
-.search-btn:hover{
-  background-color:rgb(130,0,0);
-  color:white;
-}
-
-.search-btn i{
-  margin-right:.5rem;
-}
-
-.search-inp{
-  border-radius:25px;
-  padding:.5rem 3rem;
-  font-size:1rem;
-}
-
-.navbar-brand{
-  display:flex;
-  align-items:center;
-  text-decoration:none;
-}
-
-.navbar-brand i{
-  font-size:2.4rem;
-  color:rgb(155,3,3);
-}
-
-.brand-name{
-  font-size:1.4rem;
-  font-weight:600;
-  color:rgb(155,3,3);
-  font-family:Arial, Helvetica, sans-serif;
-  margin-left:4px;
-}
-
-.nav-link{
-  font-weight:500;
-}
-
-.nav-link:hover{
-  color:rgb(165,3,3);
-}
-
-</style>
-
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
 
     <div class="container-fluid">
 
@@ -69,7 +16,10 @@
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup">
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
 
             <span class="navbar-toggler-icon"></span>
 
@@ -160,12 +110,20 @@
                     </a>
 
                     <a
-                    class="nav-link"
-                    href="/profile">
+                        class="nav-link"
+                        href="/profile">
 
-                    <i class="fa-solid fa-user"></i>
+                        <i class="fa-solid fa-user"></i>
+                        Profile
 
-                    Profile
+                    </a>
+
+                    <a
+                        class="nav-link"
+                        href="/change-password">
+
+                        <i class="fa-solid fa-key"></i>
+                        Change Password
 
                     </a>
 
@@ -192,7 +150,6 @@
                     </a>
 
                 <% } %>
-                
 
             </div>
 
