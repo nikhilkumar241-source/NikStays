@@ -1,4 +1,6 @@
 const User = require("../models/user.js");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 // ==============================
 // Render Signup Page
@@ -16,7 +18,7 @@ module.exports.signup = async (req, res, next) => {
 
         const newUser = new User({
             username,
-            email
+            email,
         });
 
         const registeredUser = await User.register(newUser, password);
@@ -72,7 +74,7 @@ module.exports.changePassword = async (req, res) => {
         const {
             currentPassword,
             newPassword,
-            confirmPassword
+            confirmPassword,
         } = req.body;
 
         if (newPassword !== confirmPassword) {
@@ -97,6 +99,161 @@ module.exports.changePassword = async (req, res) => {
 };
 
 // ==============================
+// Render Forgot Password Page
+// ==============================
+module.exports.renderForgotPasswordForm = (req, res) => {
+    res.render("users/forgotPassword.ejs");
+};
+
+// ==============================
+// Forgot Password
+// ==============================
+module.exports.forgotPassword = async (req, res) => {
+
+    try {
+
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            req.flash("error", "No account found with that email.");
+            return res.redirect("/forgot-password");
+        }
+
+        const token = crypto.randomBytes(32).toString("hex");
+
+        user.resetToken = token;
+        user.resetTokenExpiry = Date.now() + (60 * 60 * 1000); // 1 hour
+
+        await user.save();
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+
+        const resetLink = `${req.protocol}://${req.get("host")}/reset-password/${token}`;
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: user.email,
+            subject: "NikStays Password Reset",
+            html: `
+                <h2>Password Reset</h2>
+
+                <p>Hello ${user.username},</p>
+
+                <p>You requested to reset your NikStays password.</p>
+
+                <p>
+                    <a href="${resetLink}">
+                        Click here to reset your password
+                    </a>
+                </p>
+
+                <p>This link will expire in 1 hour.</p>
+
+                <p>If you didn't request this, simply ignore this email.</p>
+            `,
+        });
+
+        req.flash(
+            "success",
+            "Password reset link has been sent to your email."
+        );
+
+        res.redirect("/login");
+
+    } catch (err) {
+
+        console.error(err);
+
+        req.flash(
+            "error",
+            "Unable to send password reset email."
+        );
+
+        res.redirect("/forgot-password");
+    }
+};
+
+
+// ==============================
+// Render Reset Password Page
+// ==============================
+module.exports.renderResetPasswordForm = async (req, res) => {
+
+    try {
+
+        const user = await User.findOne({
+            resetToken: req.params.token,
+            resetTokenExpiry: { $gt: Date.now() },
+        });
+
+        if (!user) {
+            req.flash("error", "Reset link is invalid or has expired.");
+            return res.redirect("/forgot-password");
+        }
+
+        res.render("users/resetPassword.ejs", {
+            token: req.params.token,
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        req.flash("error", "Something went wrong.");
+
+        res.redirect("/forgot-password");
+    }
+};
+
+// ==============================
+// Reset Password
+// ==============================
+module.exports.resetPassword = async (req, res) => {
+
+    try {
+
+        const { password } = req.body;
+
+        const user = await User.findOne({
+            resetToken: req.params.token,
+            resetTokenExpiry: { $gt: Date.now() },
+        });
+
+        if (!user) {
+            req.flash("error", "Reset link is invalid or has expired.");
+            return res.redirect("/forgot-password");
+        }
+
+        await user.setPassword(password);
+
+        user.resetToken = undefined;
+        user.resetTokenExpiry = undefined;
+
+        await user.save();
+
+        req.flash("success", "Password reset successfully! Please login.");
+
+        res.redirect("/login");
+
+    } catch (err) {
+
+        console.error(err);
+
+        req.flash("error", "Unable to reset password.");
+
+        res.redirect("/forgot-password");
+    }
+};
+
+// ==============================
 // Logout
 // ==============================
 module.exports.logout = (req, res, next) => {
@@ -110,7 +267,5 @@ module.exports.logout = (req, res, next) => {
         req.flash("success", "You are logged out!");
 
         res.redirect("/listings");
-
     });
-
 };

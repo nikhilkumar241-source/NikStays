@@ -1,29 +1,48 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { default: passportLocalMongoose } = require("passport-local-mongoose");
 
-const userSchema = new Schema({
+// Handle both CommonJS and ESM exports
+const passportLocalMongooseModule = require("passport-local-mongoose");
+const passportLocalMongoose =
+    passportLocalMongooseModule.default || passportLocalMongooseModule;
 
-    email: {
-        type: String,
-        required: true,
+const userSchema = new Schema(
+    {
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+        },
+
+        wishlist: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Listing",
+            },
+        ],
+
+        bookings: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Booking",
+            },
+        ],
+
+        resetToken: {
+            type: String,
+            default: null,
+        },
+
+        resetTokenExpiry: {
+            type: Date,
+            default: null,
+        },
     },
-
-    wishlist: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Listing",
-        },
-    ],
-
-    bookings: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Booking",
-        },
-    ],
-
-});
+    {
+        timestamps: true,
+    }
+);
 
 userSchema.plugin(passportLocalMongoose);
 

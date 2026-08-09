@@ -51,6 +51,27 @@ router
 );
 
 
+// Forgot Password
+
+router
+.route("/forgot-password")
+.get(userController.renderForgotPasswordForm)
+.post(
+    wrapAsync(userController.forgotPassword)
+);
+
+// Reset Password
+
+router
+.route("/reset-password/:token")
+.get(
+    wrapAsync(userController.renderResetPasswordForm)
+)
+.post(
+    wrapAsync(userController.resetPassword)
+);
+
+
 // Logout
 
 router.get(
