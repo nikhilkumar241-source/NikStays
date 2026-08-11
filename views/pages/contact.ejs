@@ -1,36 +1,264 @@
-<% layout("/layouts/boilerplate") %>
+<% layout("layouts/boilerplate") %>
 
 <div class="container py-5">
 
-<h1 class="fw-bold mb-4">
-Contact Us
-</h1>
+    <!-- HERO -->
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Contact Us
+        </h1>
+
+        <p class="text-muted mt-2">
+            We're here to help. Get in touch with the NikStays team.
+        </p>
+
+    </div>
 
 
-<p>
-Have questions about NiksStays? We are here to help.
-</p>
+    <div class="row g-4 justify-content-center">
 
 
-<div class="card shadow border-0 rounded-4 p-4">
+        <!-- CONTACT INFORMATION -->
 
-<h5>
-Customer Support
-</h5>
+        <div class="col-lg-5">
 
-<p>
-📧 Email: nikstays011@gmail.com
-</p>
+            <div class="card border-0 shadow-sm h-100">
 
-<p>
-📞 Phone: +91 9258277011
-</p>
+                <div class="card-body p-4">
 
-<p>
-📍 India
-</p>
+                    <h3 class="fw-bold mb-4">
+                        Get in Touch
+                    </h3>
 
-</div>
 
+                    <div class="mb-4">
+
+                        <h6 class="fw-bold">
+                            <i class="fa-solid fa-envelope me-2"></i>
+                            Email
+                        </h6>
+
+                        <p class="text-muted mb-0">
+                            support@nikstays.com
+                        </p>
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <h6 class="fw-bold">
+                            <i class="fa-solid fa-location-dot me-2"></i>
+                            Location
+                        </h6>
+
+                        <p class="text-muted mb-0">
+                            India
+                        </p>
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <h6 class="fw-bold">
+                            <i class="fa-solid fa-clock me-2"></i>
+                            Support Hours
+                        </h6>
+
+                        <p class="text-muted mb-0">
+                            Monday - Saturday
+                            <br>
+                            9:00 AM - 6:00 PM
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <h6 class="fw-bold mb-3">
+                            Follow NikStays
+                        </h6>
+
+                        <div class="d-flex gap-3">
+
+                            <a
+                                href="#"
+                                class="text-dark fs-4"
+                                aria-label="Instagram"
+                            >
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+
+                            <a
+                                href="#"
+                                class="text-dark fs-4"
+                                aria-label="Facebook"
+                            >
+                                <i class="fa-brands fa-facebook"></i>
+                            </a>
+
+                            <a
+                                href="#"
+                                class="text-dark fs-4"
+                                aria-label="Twitter"
+                            >
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTACT FORM -->
+
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h3 class="fw-bold mb-4">
+                        Send Us a Message
+                    </h3>
+
+
+                    <form
+                        action="/contact"
+                        method="POST"
+                    >
+
+                        <div class="mb-3">
+
+                            <label
+                                for="name"
+                                class="form-label"
+                            >
+                                Your Name
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                name="name"
+                                placeholder="Enter your name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label
+                                for="email"
+                                class="form-label"
+                            >
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label
+                                for="subject"
+                                class="form-label"
+                            >
+                                Subject
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="subject"
+                                name="subject"
+                                placeholder="What can we help you with?"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <label
+                                for="message"
+                                class="form-label"
+                            >
+                                Message
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                id="message"
+                                name="message"
+                                rows="6"
+                                placeholder="Write your message..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark w-100"
+                        >
+
+                            <i class="fa-solid fa-paper-plane me-2"></i>
+
+                            Send Message
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BACK BUTTON -->
+
+    <div class="text-center mt-5">
+
+        <a
+            href="/listings"
+            class="btn btn-outline-dark"
+        >
+
+            <i class="fa-solid fa-arrow-left me-2"></i>
+
+            Back to Listings
+
+        </a>
+
+    </div>
 
 </div>

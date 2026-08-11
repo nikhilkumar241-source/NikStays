@@ -1,50 +1,429 @@
-<% layout("/layouts/boilerplate") %>
+<% layout("layouts/boilerplate") %>
 
 <div class="container py-5">
 
-<h1 class="fw-bold mb-4">
-Help Center
-</h1>
+    <!-- HERO -->
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Help Center
+        </h1>
+
+        <p class="text-muted">
+            How can we help you today?
+        </p>
+
+    </div>
 
 
-<h5>
-How can we help?
-</h5>
+    <!-- SEARCH -->
+
+    <div class="row justify-content-center mb-5">
+
+        <div class="col-md-8">
+
+            <div class="input-group input-group-lg">
+
+                <span class="input-group-text bg-white">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+
+                <input
+                    type="text"
+                    id="helpSearch"
+                    class="form-control"
+                    placeholder="Search for help..."
+                >
+
+            </div>
+
+        </div>
+
+    </div>
 
 
-<div class="mt-4">
+    <!-- HELP CATEGORIES -->
+
+    <div class="row g-4" id="helpCards">
 
 
-<p>
-<strong>How do I book a stay?</strong>
-</p>
+        <!-- BOOKING -->
 
-<p>
-Select a property, choose dates, add guests and confirm your booking.
-</p>
+        <div class="col-md-6 col-lg-4 help-card">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3 fs-2">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Booking
+                    </h4>
+
+                    <p class="text-muted">
+                        Learn how to search for stays,
+                        select dates and make a booking.
+                    </p>
+
+                    <ul class="text-muted">
+
+                        <li>
+                            How to make a booking
+                        </li>
+
+                        <li>
+                            How to view your bookings
+                        </li>
+
+                        <li>
+                            Booking information
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
+        <!-- ACCOUNT -->
 
-<p>
-<strong>Can I cancel my booking?</strong>
-</p>
+        <div class="col-md-6 col-lg-4 help-card">
 
-<p>
-Yes, you can cancel your booking from the Trips section.
-</p>
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3 fs-2">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Account
+                    </h4>
+
+                    <p class="text-muted">
+                        Manage your NikStays account,
+                        profile and password.
+                    </p>
+
+                    <ul class="text-muted">
+
+                        <li>
+                            Creating an account
+                        </li>
+
+                        <li>
+                            Changing your password
+                        </li>
+
+                        <li>
+                            Managing your profile
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
+        <!-- LISTINGS -->
 
-<p>
-<strong>How do I contact a host?</strong>
-</p>
+        <div class="col-md-6 col-lg-4 help-card">
 
-<p>
-You can contact the host through your booking details.
-</p>
+            <div class="card border-0 shadow-sm h-100">
 
+                <div class="card-body p-4">
+
+                    <div class="mb-3 fs-2">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Listings
+                    </h4>
+
+                    <p class="text-muted">
+                        Find information about properties
+                        and listing management.
+                    </p>
+
+                    <ul class="text-muted">
+
+                        <li>
+                            Searching listings
+                        </li>
+
+                        <li>
+                            Viewing property details
+                        </li>
+
+                        <li>
+                            Creating a listing
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAYMENTS -->
+
+        <div class="col-md-6 col-lg-4 help-card">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3 fs-2">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Payments
+                    </h4>
+
+                    <p class="text-muted">
+                        Get help with payment and
+                        booking-related questions.
+                    </p>
+
+                    <ul class="text-muted">
+
+                        <li>
+                            Payment information
+                        </li>
+
+                        <li>
+                            Payment process
+                        </li>
+
+                        <li>
+                            Booking confirmation
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HOSTING -->
+
+        <div class="col-md-6 col-lg-4 help-card">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3 fs-2">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Hosting
+                    </h4>
+
+                    <p class="text-muted">
+                        Learn how to become a host and
+                        manage your properties.
+                    </p>
+
+                    <ul class="text-muted">
+
+                        <li>
+                            Create a property listing
+                        </li>
+
+                        <li>
+                            Edit your listing
+                        </li>
+
+                        <li>
+                            Manage bookings
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SAFETY -->
+
+        <div class="col-md-6 col-lg-4 help-card">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3 fs-2">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Safety & Support
+                    </h4>
+
+                    <p class="text-muted">
+                        Learn about staying safe and
+                        getting support from NikStays.
+                    </p>
+
+                    <ul class="text-muted">
+
+                        <li>
+                            Safety information
+                        </li>
+
+                        <li>
+                            Reporting an issue
+                        </li>
+
+                        <li>
+                            Contact support
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTACT SUPPORT -->
+
+    <div class="row justify-content-center mt-5">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body text-center p-5">
+
+                    <div class="fs-1 mb-3">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+
+                    <h3 class="fw-bold">
+                        Still need help?
+                    </h3>
+
+                    <p class="text-muted">
+                        Our support team is here to help
+                        with your questions.
+                    </p>
+
+                    <a
+                        href="/contact"
+                        class="btn btn-dark mt-2"
+                    >
+
+                        <i class="fa-solid fa-envelope me-2"></i>
+
+                        Contact Us
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BACK -->
+
+    <div class="text-center mt-4">
+
+        <a
+            href="/listings"
+            class="btn btn-outline-dark"
+        >
+
+            <i class="fa-solid fa-arrow-left me-2"></i>
+
+            Back to Listings
+
+        </a>
+
+    </div>
 
 </div>
 
 
-</div>
+<!-- SEARCH SCRIPT -->
+
+<script>
+
+    const searchInput =
+        document.getElementById("helpSearch");
+
+    const helpCards =
+        document.querySelectorAll(".help-card");
+
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            const search =
+                this.value
+                    .toLowerCase()
+                    .trim();
+
+
+            helpCards.forEach(
+                function (card) {
+
+                    const text =
+                        card.innerText
+                            .toLowerCase();
+
+
+                    if (
+                        text.includes(search)
+                    ) {
+
+                        card.style.display =
+                            "";
+
+                    } else {
+
+                        card.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+</script>
