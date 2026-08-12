@@ -1,94 +1,243 @@
 <% layout("/layouts/boilerplate") %>
 
-
 <div class="container py-5">
 
-<h2 class="fw-bold mb-4">
-❤️ My Wishlist
-</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold mb-1">
+
+                <i class="fa-solid fa-heart text-danger"></i>
+
+                My Wishlist
+
+            </h1>
+
+            <p class="text-muted mb-0">
+
+                Your saved stays in one place.
+
+            </p>
+
+        </div>
+
+        <span class="badge bg-dark fs-6">
+
+            <%= wishlist.length %> Saved
+
+        </span>
+
+    </div>
 
 
-<div class="row">
+    <% if (wishlist.length === 0) { %>
+
+        <div class="card shadow-sm border-0 rounded-4">
+
+            <div class="card-body text-center py-5">
+
+                <i
+                    class="fa-regular fa-heart fa-4x text-danger mb-4"
+                ></i>
+
+                <h3 class="fw-bold">
+                    Your wishlist is empty
+                </h3>
+
+                <p class="text-muted mb-4">
+
+                    Save your favourite stays and
+                    find them here later.
+
+                </p>
+
+                <a
+                    href="/listings"
+                    class="btn btn-danger rounded-pill px-4"
+                >
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Browse Listings
+
+                </a>
+
+            </div>
+
+        </div>
+
+    <% } else { %>
 
 
-<% wishlist.forEach(item=>{ %>
+        <div class="row">
+
+            <% wishlist.forEach(item => { %>
+
+                <% if (item.listing) { %>
+
+                    <%
+
+                        let image;
+
+                        if (
+                            item.listing.images &&
+                            item.listing.images.length > 0 &&
+                            item.listing.images[0].url
+                        ) {
+
+                            image =
+                                item.listing.images[0].url;
+
+                        } else if (
+                            item.listing.image &&
+                            item.listing.image.url
+                        ) {
+
+                            image =
+                                item.listing.image.url;
+
+                        } else {
+
+                            image =
+                                "https://via.placeholder.com/600x400?text=No+Image";
+
+                        }
+
+                    %>
 
 
-<div class="col-lg-4 col-md-6 mb-4">
+                    <div
+                        class="col-lg-3 col-md-6 col-sm-12 mb-4"
+                    >
+
+                        <div
+                            class="listing-card h-100"
+                        >
+
+                            <div
+                                class="card-img-container"
+                            >
+
+                                <span
+                                    class="guest-badge"
+                                >
+                                    ❤️ Saved
+                                </span>
 
 
-<div class="card shadow rounded-4 overflow-hidden">
+                                <form
+                                    action="/wishlist/<%= item.listing._id %>"
+                                    method="POST"
+                                    class="wishlist-form"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="wishlist-btn"
+                                        aria-label="Remove from wishlist"
+                                    >
+
+                                        <i
+                                            class="fa-solid fa-heart text-danger"
+                                        ></i>
+
+                                    </button>
+
+                                </form>
 
 
-<img
-src="<%= item.listing.images[0].url %>"
-class="card-img-top"
-height="250"
-style="object-fit:cover;"
->
+                                <a
+                                    href="/listings/<%= item.listing._id %>"
+                                    class="listing-link"
+                                >
+
+                                    <img
+                                        src="<%= image %>"
+                                        class="listing-img"
+                                        alt="<%= item.listing.title %>"
+                                    >
+
+                                </a>
+
+                            </div>
 
 
-<div class="card-body">
+                            <div class="listing-info">
+
+                                <a
+                                    href="/listings/<%= item.listing._id %>"
+                                    class="listing-link"
+                                >
+
+                                    <h6 class="mb-1">
+
+                                        <%= item.listing.title %>
+
+                                    </h6>
 
 
-<h5>
-<%= item.listing.title %>
-</h5>
+                                    <small
+                                        class="text-muted"
+                                    >
+
+                                        <%= item.listing.location %>
+
+                                    </small>
 
 
-<p class="text-muted">
-
-<%= item.listing.location %>
-
-</p>
+                                    <br>
 
 
-<h6>
-₹ <%= item.listing.price %> / night
-</h6>
+                                    <strong>
+
+                                        ₹<%= Number(
+                                            item.listing.price || 0
+                                        ).toLocaleString("en-IN") %>
+
+                                    </strong>
+
+                                    / night
+
+                                </a>
+
+                            </div>
 
 
+                            <div class="px-3 pb-3">
 
-<a
-href="/listings/<%= item.listing._id %>"
-class="btn btn-dark rounded-pill">
+                                <form
+                                    action="/wishlist/<%= item.listing._id %>"
+                                    method="POST"
+                                >
 
-View
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-danger w-100 rounded-pill"
+                                    >
 
-</a>
+                                        <i
+                                            class="fa-solid fa-heart-crack"
+                                        ></i>
 
+                                        Remove
 
+                                    </button>
 
-<form
-method="POST"
-action="/wishlist/<%= item.listing._id %>?_method=DELETE"
-class="d-inline">
+                                </form>
 
+                            </div>
 
-<button
-class="btn btn-outline-danger rounded-pill">
+                        </div>
 
-Remove
+                    </div>
 
-</button>
+                <% } %>
 
+            <% }) %>
 
-</form>
+        </div>
 
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-<% }) %>
-
-
-</div>
-
+    <% } %>
 
 </div>

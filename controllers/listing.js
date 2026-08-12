@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Listing = require("../models/listing");
+const Wishlist = require("../models/wishlist");
 
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 
@@ -22,8 +23,8 @@ module.exports.index = async (req, res, next) => {
 
         let filter = {};
 
+        // ================= SEARCH =================
 
-        // Search filter
         if (search && search.trim() !== "") {
 
             filter.$or = [
@@ -31,66 +32,76 @@ module.exports.index = async (req, res, next) => {
                 {
                     title: {
                         $regex: search,
-                        $options: "i",
-                    },
+                        $options: "i"
+                    }
                 },
 
                 {
                     location: {
                         $regex: search,
-                        $options: "i",
-                    },
+                        $options: "i"
+                    }
                 },
 
                 {
                     country: {
                         $regex: search,
-                        $options: "i",
-                    },
-                },
+                        $options: "i"
+                    }
+                }
 
             ];
 
         }
 
 
-        // Category filter
+        // ================= CATEGORY =================
+
         if (category) {
+
             filter.category = category;
+
         }
 
+
+        // ================= GET LISTINGS =================
 
         const allListings = await Listing.find(filter)
             .populate("owner");
 
 
-        // Wishlist data
+        // ==================================================
+        // WISHLIST
+        // ==================================================
+
         let wishlist = [];
 
         if (req.user) {
 
-            const user = await User.findById(req.user._id);
+            const wishlistDocuments = await Wishlist.find({
+                user: req.user._id
+            });
 
-            if (user && user.wishlist) {
-
-                wishlist = user.wishlist.map(
-                    id => id.toString()
-                );
-
-            }
+            wishlist = wishlistDocuments.map(item =>
+                item.listing.toString()
+            );
 
         }
 
 
+        // ================= RENDER =================
+
         res.render("listings/index.ejs", {
 
             allListings,
+
             wishlist,
+
             search,
-            category,
+
+            category
 
         });
-
 
     } catch (err) {
 
@@ -99,8 +110,6 @@ module.exports.index = async (req, res, next) => {
     }
 
 };
-
-
 
 
 // ======================================================
@@ -118,7 +127,6 @@ module.exports.searchListings = async (req, res, next) => {
 
         if (search && search.trim() !== "") {
 
-
             listings = await Listing.find({
 
                 $or: [
@@ -126,47 +134,40 @@ module.exports.searchListings = async (req, res, next) => {
                     {
                         title: {
                             $regex: search,
-                            $options: "i",
-                        },
+                            $options: "i"
+                        }
                     },
-
 
                     {
                         location: {
                             $regex: search,
-                            $options: "i",
-                        },
+                            $options: "i"
+                        }
                     },
-
 
                     {
                         country: {
                             $regex: search,
-                            $options: "i",
-                        },
-                    },
+                            $options: "i"
+                        }
+                    }
 
-
-                ],
+                ]
 
             });
-
 
         }
 
 
         res.json(listings);
 
-
-    } catch(err){
+    } catch (err) {
 
         next(err);
 
     }
 
 };
-
-
 
 
 // ======================================================
@@ -180,8 +181,6 @@ module.exports.renderNewForm = (req, res) => {
 };
 
 
-
-
 // ======================================================
 // SHOW SINGLE LISTING
 // ======================================================
@@ -192,23 +191,16 @@ module.exports.showListing = async (req, res, next) => {
 
         const { id } = req.params;
 
-
         const listing = await Listing.findById(id)
 
             .populate({
-
                 path: "reviews",
-
                 populate: {
-
-                    path: "author",
-
-                },
-
+                    path: "author"
+                }
             })
 
             .populate("owner");
-
 
 
         if (!listing) {
@@ -223,6 +215,27 @@ module.exports.showListing = async (req, res, next) => {
         }
 
 
+        // ==================================================
+        // CHECK WISHLIST STATUS
+        // ==================================================
+
+        let isWishlisted = false;
+
+        if (req.user) {
+
+            const existingWishlist =
+                await Wishlist.findOne({
+
+                    user: req.user._id,
+
+                    listing: listing._id
+
+                });
+
+            isWishlisted = !!existingWishlist;
+
+        }
+
 
         res.render("listings/show.ejs", {
 
@@ -232,11 +245,11 @@ module.exports.showListing = async (req, res, next) => {
 
             mapToken: process.env.MAP_TOKEN,
 
+            isWishlisted
+
         });
 
-
-
-    } catch(err){
+    } catch (err) {
 
         next(err);
 
@@ -256,61 +269,57 @@ module.exports.createListing = async (req, res, next) => {
         const response = await geocodingClient
             .forwardGeocode({
 
-                query: `${req.body.listing.location}, ${req.body.listing.country}`,
+                query:
+                    `${req.body.listing.location}, ${req.body.listing.country}`,
 
-                limit: 1,
+                limit: 1
 
             })
             .send();
 
 
-
-        const newListing = new Listing(
-            req.body.listing
-        );
+        const newListing =
+            new Listing(req.body.listing);
 
 
-        // Assign owner
+        // ================= OWNER =================
+
         newListing.owner = req.user._id;
 
 
+        // ================= IMAGES =================
 
-        // Upload multiple images
         if (req.files && req.files.length > 0) {
 
+            newListing.images =
+                req.files.map(file => ({
 
-            newListing.images = req.files.map(file => ({
+                    url: file.path,
 
-                url: file.path,
+                    filename: file.filename
 
-                filename: file.filename,
-
-            }));
+                }));
 
 
             // Backward compatibility
-            newListing.image = newListing.images[0];
+
+            newListing.image =
+                newListing.images[0];
 
         }
 
 
-
-        // Mapbox Geometry
+        // ================= MAPBOX =================
 
         if (
             response.body.features &&
             response.body.features.length > 0
         ) {
 
-
             newListing.geometry =
                 response.body.features[0].geometry;
 
-
         } else {
-
-
-            // Default location (New Delhi)
 
             newListing.geometry = {
 
@@ -319,17 +328,14 @@ module.exports.createListing = async (req, res, next) => {
                 coordinates: [
                     77.2090,
                     28.6139
-                ],
+                ]
 
             };
-
 
         }
 
 
-
         await newListing.save();
-
 
 
         req.flash(
@@ -342,17 +348,13 @@ module.exports.createListing = async (req, res, next) => {
             `/listings/${newListing._id}`
         );
 
-
-    } catch(err){
+    } catch (err) {
 
         next(err);
 
     }
 
 };
-
-
-
 
 
 // ======================================================
@@ -365,9 +367,8 @@ module.exports.renderEditForm = async (req, res, next) => {
 
         const { id } = req.params;
 
-
-        const listing = await Listing.findById(id);
-
+        const listing =
+            await Listing.findById(id);
 
 
         if (!listing) {
@@ -382,7 +383,6 @@ module.exports.renderEditForm = async (req, res, next) => {
         }
 
 
-
         res.render(
             "listings/edit.ejs",
             {
@@ -390,17 +390,13 @@ module.exports.renderEditForm = async (req, res, next) => {
             }
         );
 
-
-    } catch(err){
+    } catch (err) {
 
         next(err);
 
     }
 
 };
-
-
-
 
 
 // ======================================================
@@ -411,13 +407,10 @@ module.exports.updateListing = async (req, res, next) => {
 
     try {
 
-
         const { id } = req.params;
 
-
-
-        const listing = await Listing.findById(id);
-
+        const listing =
+            await Listing.findById(id);
 
 
         if (!listing) {
@@ -432,53 +425,40 @@ module.exports.updateListing = async (req, res, next) => {
         }
 
 
-
-
-        // Update fields
+        // ================= UPDATE FIELDS =================
 
         listing.title =
             req.body.listing.title;
 
-
         listing.description =
             req.body.listing.description;
-
 
         listing.price =
             req.body.listing.price;
 
-
         listing.location =
             req.body.listing.location;
 
-
         listing.country =
             req.body.listing.country;
-
 
         listing.category =
             req.body.listing.category;
 
 
+        // ================= UPDATE LOCATION =================
 
+        const response =
+            await geocodingClient
+                .forwardGeocode({
 
+                    query:
+                        `${listing.location}, ${listing.country}`,
 
-        // Update Mapbox location
+                    limit: 1
 
-        const response = await geocodingClient
-
-            .forwardGeocode({
-
-                query:
-                `${listing.location}, ${listing.country}`,
-
-                limit: 1,
-
-            })
-
-            .send();
-
-
+                })
+                .send();
 
 
         if (
@@ -486,35 +466,34 @@ module.exports.updateListing = async (req, res, next) => {
             response.body.features.length > 0
         ) {
 
-
             listing.geometry =
                 response.body.features[0].geometry;
-
 
         }
 
 
-
-
-
-        // Add new images
+        // ================= ADD IMAGES =================
 
         if (
             req.files &&
             req.files.length > 0
         ) {
 
-
-
             const newImages =
                 req.files.map(file => ({
 
                     url: file.path,
 
-                    filename: file.filename,
+                    filename: file.filename
 
                 }));
 
+
+            if (!listing.images) {
+
+                listing.images = [];
+
+            }
 
 
             listing.images.push(
@@ -522,21 +501,13 @@ module.exports.updateListing = async (req, res, next) => {
             );
 
 
-
-            // Keep compatibility
-
             listing.image =
                 listing.images[0];
-
 
         }
 
 
-
-
         await listing.save();
-
-
 
 
         req.flash(
@@ -545,21 +516,17 @@ module.exports.updateListing = async (req, res, next) => {
         );
 
 
-
         res.redirect(
             `/listings/${listing._id}`
         );
 
-
-
-    } catch(err){
+    } catch (err) {
 
         next(err);
 
     }
 
 };
-
 
 
 // ======================================================
@@ -577,7 +544,6 @@ module.exports.destroyListing = async (req, res, next) => {
             await Listing.findByIdAndDelete(id);
 
 
-
         if (!deletedListing) {
 
             req.flash(
@@ -590,6 +556,14 @@ module.exports.destroyListing = async (req, res, next) => {
         }
 
 
+        // ==================================================
+        // REMOVE WISHLIST ENTRIES FOR THIS LISTING
+        // ==================================================
+
+        await Wishlist.deleteMany({
+            listing: id
+        });
+
 
         req.flash(
             "success",
@@ -599,8 +573,7 @@ module.exports.destroyListing = async (req, res, next) => {
 
         res.redirect("/listings");
 
-
-    } catch(err){
+    } catch (err) {
 
         next(err);
 
@@ -609,72 +582,109 @@ module.exports.destroyListing = async (req, res, next) => {
 };
 
 
-
-
-
 // ======================================================
-// SAVE / UNSAVE LISTING (WISHLIST)
+// SAVE / UNSAVE LISTING
 // ======================================================
+//
+// This endpoint is kept for compatibility with:
+// POST /listings/:id/save
+//
+// It now uses the Wishlist model instead of User.wishlist.
+//
 
 module.exports.saveListing = async (req, res, next) => {
 
     try {
 
-
         const { id } = req.params;
 
 
-        const user = req.user;
+        if (!req.user) {
 
+            return res.status(401).json({
 
+                success: false,
 
-        if (
-            user.wishlist.includes(id)
-        ) {
+                message: "Please login first"
 
-
-            // Remove from wishlist
-
-            user.wishlist.pull(id);
-
-
-        } else {
-
-
-            // Add to wishlist
-
-            user.wishlist.push(id);
-
+            });
 
         }
 
 
+        const listing =
+            await Listing.findById(id);
 
-        await user.save();
+
+        if (!listing) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message: "Listing not found"
+
+            });
+
+        }
 
 
+        const existing =
+            await Wishlist.findOne({
 
-        res.json({
+                user: req.user._id,
 
-            success: true,
+                listing: id
 
-            saved:
-            user.wishlist.includes(id),
+            });
+
+
+        // ================= REMOVE =================
+
+        if (existing) {
+
+            await Wishlist.findByIdAndDelete(
+                existing._id
+            );
+
+
+            return res.json({
+
+                success: true,
+
+                saved: false
+
+            });
+
+        }
+
+
+        // ================= ADD =================
+
+        await Wishlist.create({
+
+            user: req.user._id,
+
+            listing: id
 
         });
 
 
+        return res.json({
 
-    } catch(err){
+            success: true,
+
+            saved: true
+
+        });
+
+    } catch (err) {
 
         next(err);
 
     }
 
 };
-
-
-
 
 
 // ======================================================
@@ -685,30 +695,23 @@ module.exports.renderPaymentPage = async (req, res, next) => {
 
     try {
 
-
         const { id } = req.params;
-
 
 
         const listing =
             await Listing.findById(id);
 
 
-
         if (!listing) {
-
 
             req.flash(
                 "error",
                 "Listing not found!"
             );
 
-
             return res.redirect("/listings");
 
         }
-
-
 
 
         res.render(
@@ -718,9 +721,7 @@ module.exports.renderPaymentPage = async (req, res, next) => {
             }
         );
 
-
-
-    } catch(err){
+    } catch (err) {
 
         next(err);
 

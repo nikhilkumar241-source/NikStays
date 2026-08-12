@@ -1,219 +1,749 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-#filters{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    margin-top:1rem;
-}
 
-.filter{
-    text-align:center;
-    margin-right:2rem;
-    margin-top:1rem;
-    opacity:.7;
-}
+    /* =========================================================
+       FILTERS
+    ========================================================= */
 
-.filter:hover{
-    opacity:1;
-    cursor:pointer;
-}
+    #filters {
 
-.tax-info{
-    display:none;
-}
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
 
-.tax-toggle{
-    border:1px solid #000;
-    border-radius:1rem;
-    height:3.25rem;
-    padding:1rem;
-    margin-left:2rem;
-    display:flex;
-    align-items:center;
-}
+        margin-top: 1rem;
+
+        gap: 0.25rem;
+    }
+
+
+    .filter {
+
+        text-align: center;
+
+        margin-right: 1.5rem;
+
+        margin-top: 1rem;
+
+        opacity: 0.7;
+
+        color: inherit;
+
+        text-decoration: none;
+    }
+
+
+    .filter:hover {
+
+        opacity: 1;
+
+        cursor: pointer;
+    }
+
+
+    /* =========================================================
+       TAX INFO
+    ========================================================= */
+
+    .tax-info {
+
+        display: none;
+
+        color: #198754;
+
+        font-size: 0.85rem;
+
+        font-weight: 600;
+
+        margin-left: 4px;
+    }
+
+
+    .tax-toggle {
+
+        border: 1px solid #000;
+
+        border-radius: 2rem;
+
+        min-height: 3.25rem;
+
+        padding: 0.75rem 1rem;
+
+        margin-left: 1rem;
+
+        margin-top: 1rem;
+
+        display: flex;
+
+        align-items: center;
+
+        background: var(--main-bg, #e7e0e0);
+    }
+
+
+    .tax-toggle .form-check {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 0.5rem;
+
+        margin: 0;
+    }
+
+
+    .tax-toggle .form-check-input {
+
+        cursor: pointer;
+
+        width: 2.2rem;
+
+        height: 1.2rem;
+
+        margin: 0;
+    }
+
+
+    .tax-toggle .form-check-input:checked {
+
+        background-color: #a50303;
+
+        border-color: #a50303;
+    }
+
+
+    .tax-toggle .form-check-label {
+
+        cursor: pointer;
+
+        margin: 0;
+
+        font-weight: 500;
+    }
+
+
+    /* =========================================================
+       PRICE
+    ========================================================= */
+
+    .price-container {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 3px;
+    }
+
+
+    .price-value {
+
+        font-weight: 700;
+    }
+
+
+    /* =========================================================
+       WISHLIST
+    ========================================================= */
+
+    .wishlist-form {
+
+        position: absolute;
+
+        top: 12px;
+
+        right: 12px;
+
+        z-index: 10;
+
+        margin: 0;
+    }
+
+
+    .wishlist-btn {
+
+        width: 40px;
+
+        height: 40px;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.95);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        cursor: pointer;
+
+        font-size: 1.2rem;
+
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease;
+    }
+
+
+    .wishlist-btn:hover {
+
+        transform: scale(1.1);
+
+        background: #fff;
+    }
+
+
+    .wishlist-btn .fa-heart.text-danger {
+
+        color: #dc3545 !important;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 768px) {
+
+        #filters {
+
+            gap: 0.5rem;
+        }
+
+
+        .filter {
+
+            margin-right: 1rem;
+        }
+
+
+        .tax-toggle {
+
+            margin-left: 0;
+        }
+
+    }
+
 </style>
 
-<!-- FILTERS -->
+
+<!-- =========================================================
+     FILTERS
+========================================================= -->
 
 <div id="filters">
 
-    <a href="/listings?category=Trending" class="filter listing-link">
-        <div><i class="fa-solid fa-fire"></i></div>
+
+    <a
+        href="/listings?category=Trending"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-fire"></i>
+        </div>
+
         <p>Trending</p>
+
     </a>
 
-    <a href="/listings?category=Rooms" class="filter listing-link">
-        <div><i class="fa-solid fa-bed"></i></div>
+
+    <a
+        href="/listings?category=Rooms"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-bed"></i>
+        </div>
+
         <p>Rooms</p>
+
     </a>
 
-    <a href="/listings?category=Iconic Cities" class="filter listing-link">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
+
+    <a
+        href="/listings?category=Iconic Cities"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-mountain-city"></i>
+        </div>
+
         <p>Iconic Cities</p>
+
     </a>
 
-    <a href="/listings?category=Mountains" class="filter listing-link">
-        <div><i class="fa-solid fa-mountain"></i></div>
+
+    <a
+        href="/listings?category=Mountains"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-mountain"></i>
+        </div>
+
         <p>Mountain</p>
+
     </a>
 
-    <a href="/listings?category=Historical" class="filter listing-link">
-        <div><i class="fa-brands fa-fort-awesome"></i></div>
+
+    <a
+        href="/listings?category=Historical"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-brands fa-fort-awesome"></i>
+        </div>
+
         <p>Historical</p>
+
     </a>
 
-    <a href="/listings?category=Beach" class="filter listing-link">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
+
+    <a
+        href="/listings?category=Beach"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-person-swimming"></i>
+        </div>
+
         <p>Beach</p>
+
     </a>
 
-    <a href="/listings?category=Camping" class="filter listing-link">
-        <div><i class="fa-solid fa-campground"></i></div>
+
+    <a
+        href="/listings?category=Camping"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-campground"></i>
+        </div>
+
         <p>Camping</p>
+
     </a>
 
-    <a href="/listings?category=Farmhouse" class="filter listing-link">
-        <div><i class="fa-solid fa-tractor"></i></div>
+
+    <a
+        href="/listings?category=Farmhouse"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-tractor"></i>
+        </div>
+
         <p>Farmhouse</p>
+
     </a>
 
-    <a href="/listings?category=Food" class="filter listing-link">
-        <div><i class="fa-solid fa-burger"></i></div>
+
+    <a
+        href="/listings?category=Food"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-burger"></i>
+        </div>
+
         <p>Food</p>
+
     </a>
 
-    <a href="/listings?category=Domes" class="filter listing-link">
-        <div><i class="fa-solid fa-igloo"></i></div>
+
+    <a
+        href="/listings?category=Domes"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-igloo"></i>
+        </div>
+
         <p>Domes</p>
+
     </a>
 
-    <a href="/listings?category=Lake" class="filter listing-link">
-        <div><i class="fa-solid fa-sailboat"></i></div>
+
+    <a
+        href="/listings?category=Lake"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-sailboat"></i>
+        </div>
+
         <p>Lake</p>
+
     </a>
 
-    <a href="/listings?category=Ocean" class="filter listing-link">
-        <div><i class="fa-solid fa-anchor"></i></div>
+
+    <a
+        href="/listings?category=Ocean"
+        class="filter listing-link"
+    >
+
+        <div>
+            <i class="fa-solid fa-anchor"></i>
+        </div>
+
         <p>Ocean</p>
+
     </a>
+
+
+    <!-- TAX TOGGLE -->
 
     <div class="tax-toggle">
+
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="switchCheckDefault">
-            <label class="form-check-label" for="switchCheckDefault">
+
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="switchCheckDefault"
+            >
+
+            <label
+                class="form-check-label"
+                for="switchCheckDefault"
+            >
                 Display Taxes
             </label>
+
         </div>
+
     </div>
 
 </div>
 
-<!-- LISTINGS -->
+
+<!-- =========================================================
+     LISTINGS
+========================================================= -->
 
 <div class="row mt-4">
 
-<% allListings.forEach(listing => { %>
+    <% allListings.forEach(listing => { %>
 
-<%
-let coverImage;
 
-if (listing.images && listing.images.length > 0) {
-    coverImage = listing.images[0].url;
-} else if (listing.image) {
-    coverImage = listing.image.url;
-} else {
-    coverImage = "https://via.placeholder.com/600x400?text=No+Image";
-}
-%>
+        <%
 
-<div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+            let coverImage;
 
-    <div class="listing-card">
+            if (
+                listing.images &&
+                listing.images.length > 0 &&
+                listing.images[0].url
+            ) {
 
-        <!-- IMAGE -->
+                coverImage =
+                    listing.images[0].url;
 
-        <div class="card-img-container">
+            }
 
-            <span class="guest-badge">
-                🏆 Guest favourite
-            </span>
+            else if (
+                listing.image &&
+                listing.image.url
+            ) {
 
-            <form action="/wishlist/<%= listing._id %>" method="POST" class="wishlist-form">
+                coverImage =
+                    listing.image.url;
 
-                <button type="submit" class="wishlist-btn">
+            }
 
-                    <% if (wishlist.includes(listing._id.toString())) { %>
+            else {
 
-                        <i class="fa-solid fa-heart text-danger"></i>
+                coverImage =
+                    "https://via.placeholder.com/600x400?text=No+Image";
 
-                    <% } else { %>
+            }
 
-                        <i class="fa-regular fa-heart"></i>
+        %>
 
-                    <% } %>
 
-                </button>
+        <!-- LISTING CARD -->
 
-            </form>
+        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
 
-            <a href="/listings/<%= listing._id %>" class="listing-link">
+            <div class="listing-card">
 
-                <img
-                    src="<%= coverImage %>"
-                    class="listing-img"
-                    alt="<%= listing.title %>"
-                >
 
-            </a>
+                <!-- IMAGE -->
+
+                <div class="card-img-container">
+
+
+                    <!-- GUEST FAVOURITE -->
+
+                    <span class="guest-badge">
+
+                        🏆 Guest favourite
+
+                    </span>
+
+
+                    <!-- WISHLIST -->
+
+                    <form
+                        action="/wishlist/<%= listing._id %>"
+                        method="POST"
+                        class="wishlist-form"
+                    >
+
+                        <button
+                            type="submit"
+                            class="wishlist-btn"
+                            aria-label="Toggle wishlist"
+                        >
+
+                            <% if (
+                                typeof wishlist !== "undefined" &&
+                                wishlist &&
+                                wishlist.includes(
+                                    listing._id.toString()
+                                )
+                            ) { %>
+
+                                <i
+                                    class="fa-solid fa-heart text-danger"
+                                ></i>
+
+                            <% } else { %>
+
+                                <i
+                                    class="fa-regular fa-heart"
+                                ></i>
+
+                            <% } %>
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- LISTING IMAGE -->
+
+                    <a
+                        href="/listings/<%= listing._id %>"
+                        class="listing-link"
+                    >
+
+                        <img
+                            src="<%= coverImage %>"
+                            class="listing-img"
+                            alt="<%= listing.title %>"
+                        >
+
+                    </a>
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="listing-info">
+
+                    <a
+                        href="/listings/<%= listing._id %>"
+                        class="listing-link"
+                    >
+
+
+                        <!-- TITLE -->
+
+                        <h6 class="mb-1">
+
+                            <%= listing.title %>
+
+                        </h6>
+
+
+                        <!-- LOCATION -->
+
+                        <small class="text-muted">
+
+                            <%= listing.location %>
+
+                        </small>
+
+
+                        <br>
+
+
+                        <!-- PRICE -->
+
+                        <span class="price-container">
+
+                            <strong>
+
+                                ₹
+
+                                <span
+                                    class="price-value"
+                                    data-price="<%= Number(listing.price) || 0 %>"
+                                >
+
+                                    <%= Number(
+                                        listing.price || 0
+                                    ).toLocaleString("en-IN") %>
+
+                                </span>
+
+                            </strong>
+
+
+                            <!-- TAX -->
+
+                            <span class="tax-info">
+
+                                +18% GST
+
+                            </span>
+
+                        </span>
+
+
+                        <span>
+
+                            / night
+
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
-        <!-- DETAILS -->
 
-        <div class="listing-info">
-
-            <a href="/listings/<%= listing._id %>" class="listing-link">
-
-                <h6 class="mb-1">
-                    <%= listing.title %>
-                </h6>
-
-                <small class="text-muted">
-                    <%= listing.location %>
-                </small>
-
-                <br>
-
-                <strong>
-                    ₹ <%= listing.price.toLocaleString("en-IN") %>
-                </strong>
-
-                / night
-
-            </a>
-
-        </div>
-
-    </div>
+    <% }) %>
 
 </div>
 
-<% }) %>
 
-</div>
+<!-- =========================================================
+     TAX TOGGLE JAVASCRIPT
+========================================================= -->
 
 <script>
-const taxSwitch = document.getElementById("switchCheckDefault");
 
-taxSwitch.addEventListener("change", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    const taxInfo = document.querySelectorAll(".tax-info");
 
-    taxInfo.forEach(info => {
-        info.style.display = taxSwitch.checked ? "inline" : "none";
-    });
+        const taxSwitch =
+            document.getElementById(
+                "switchCheckDefault"
+            );
 
-});
+
+        if (!taxSwitch) {
+
+            return;
+
+        }
+
+
+        taxSwitch.addEventListener(
+            "change",
+            function () {
+
+
+                const priceElements =
+                    document.querySelectorAll(
+                        ".price-value"
+                    );
+
+
+                const taxInfoElements =
+                    document.querySelectorAll(
+                        ".tax-info"
+                    );
+
+
+                priceElements.forEach(
+                    function (priceElement) {
+
+
+                        const originalPrice =
+                            Number(
+                                priceElement.dataset.price
+                            );
+
+
+                        if (taxSwitch.checked) {
+
+
+                            const tax =
+                                Math.round(
+                                    originalPrice * 0.18
+                                );
+
+
+                            const totalPrice =
+                                originalPrice + tax;
+
+
+                            priceElement.textContent =
+                                totalPrice.toLocaleString(
+                                    "en-IN"
+                                );
+
+                        }
+
+                        else {
+
+
+                            priceElement.textContent =
+                                originalPrice.toLocaleString(
+                                    "en-IN"
+                                );
+
+                        }
+
+                    }
+                );
+
+
+                taxInfoElements.forEach(
+                    function (info) {
+
+
+                        info.style.display =
+                            taxSwitch.checked
+                                ? "inline"
+                                : "none";
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
 </script>

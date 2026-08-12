@@ -1,140 +1,86 @@
-<!-- ================= IMAGE GALLERY ================= -->
-
+<!-- =========================================================
+     IMAGE GALLERY
+========================================================= -->
 
 <%
-let galleryImages = [];
+    let galleryImages = [];
 
-if (listing.images && listing.images.length > 0) {
-
-    galleryImages = listing.images;
-
-} else if (listing.image) {
-
-    galleryImages = [listing.image];
-
-}
-
+    if (listing.images && listing.images.length > 0) {
+        galleryImages = listing.images;
+    } else if (listing.image) {
+        galleryImages = [listing.image];
+    }
 %>
 
+<% if (galleryImages.length > 0) { %>
 
+<div class="airbnb-gallery">
 
-<div class="airbnb-gallery rounded-4 overflow-hidden">
-
-
-    <!-- Main Image -->
-
+    <!-- MAIN IMAGE -->
     <div class="gallery-main">
 
-
         <img
-
             src="<%= galleryImages[0].url %>"
-
             class="gallery-image"
-
             data-index="0"
-
             data-bs-toggle="modal"
-
             data-bs-target="#imageModal"
-
-            alt="Listing Image"
-
-
+            alt="<%= listing.title %>"
         >
-
 
     </div>
 
 
-
-
-
-    <!-- Small Images -->
-
+    <!-- RIGHT SIDE IMAGES -->
     <div class="gallery-grid">
 
+        <% for(let i = 1; i <= 4; i++) { %>
 
-        <% for(let i = 1; i < 5; i++){ %>
-
-
-
-            <% if(galleryImages[i]){ %>
-
-
+            <% if(galleryImages[i]) { %>
 
                 <div class="gallery-small">
 
-
                     <img
-
                         src="<%= galleryImages[i].url %>"
-
                         class="gallery-image"
-
                         data-index="<%= i %>"
-
                         data-bs-toggle="modal"
-
                         data-bs-target="#imageModal"
-
-                        alt="Listing Image"
-
-
+                        alt="<%= listing.title %>"
                     >
-
 
                 </div>
 
-
-
             <% } else { %>
 
-
-                <div class="gallery-small bg-light"></div>
-
+                <div class="gallery-small gallery-placeholder"></div>
 
             <% } %>
 
-
-
         <% } %>
 
-
-
     </div>
-
 
 </div>
 
 
+<!-- SHOW ALL PHOTOS -->
 
-
-
-<!-- Show All Photos Button -->
-
-
-<div class="text-end mt-3 mb-5">
-
+<div class="gallery-actions">
 
     <button
-
-        class="btn btn-outline-dark rounded-pill"
-
+        type="button"
+        class="show-all-photos"
         data-bs-toggle="modal"
-
         data-bs-target="#imageModal"
-
-
     >
-
 
         <i class="fa-solid fa-images"></i>
 
         Show all photos
 
-
     </button>
 
-
 </div>
+
+<% } %>
